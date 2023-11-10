@@ -21,7 +21,7 @@ def create(cliente):
             con.commit()
 
     except Exception as error:
-        print("Ocorreu um erro ao cadastrar o livro.")
+        print("Ocorreu um erro ao realizar seu cadastro.")
         raise error
 
 
@@ -36,7 +36,7 @@ def find_all():
                 return cur.fetchall()
             
     except Exception as error:
-        print("Ocorreu um erro ao consultar os livros")
+        print("Ocorreu um erro na consulta ao seu cadastro")
         raise error
 
 
@@ -56,7 +56,7 @@ def find_one_by_id(id):
                     return resp[0]
             
     except Exception as error:
-        print("Ocorreu um erro ao consultar os livros")
+        print("Ocorreu um erro na consulta ao seu cadastro")
         raise error
 
 
@@ -73,7 +73,7 @@ def update(cliente, id):
             con.commit()
 
     except Exception as erro:
-        print("Ocorreu um erro ao atualizar o livro.")
+        print("Ocorreu um erro ao atualizar seu cadastro.")
         raise erro
 
 #iden = int(input("qual id quer alterar?"))
@@ -104,7 +104,7 @@ def delete(id):
             return  affected_rows
 
     except Exception as erro:
-        print("Ocorreu um erro ao deletar o livro.")
+        print("Ocorreu um erro ao deletar seu cadastro.")
         raise erro
 
 delete(2)
