@@ -33,23 +33,20 @@ def cadastraCliente():
     
     veiculos = []
     cliente = {}
+    aux = str(input("informe seu id: "))
+    cliente['id'] = aux
     
-    cliente['id'] = codigo.ids()
-    
-    aux = str(input("informe seu nome: "))
+    aux = str(input("informe seu nome completo: "))
     cliente['nome'] = aux
-
-    aux = str(input("informe seu sobrenome: "))
-    cliente['sobre_nome'] = aux
 
     aux = str(input("informe seu CPF: "))
     cliente['cpf'] = aux
 
     
-    veiculos.append(cadastraV())
-    cliente['veiculos'] = veiculos
-    idCliente = cliente['id']
-    listaIdCliente.append(idCliente)
+    #veiculos.append(cadastraV())
+    #cliente['veiculos'] = veiculos
+    #idCliente = cliente['id']
+    #listaIdCliente.append(idCliente)
     return cliente
 
 def carga(placa):
