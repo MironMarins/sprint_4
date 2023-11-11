@@ -1,10 +1,14 @@
+import datetime as dt
 import oracledb
 import cadastra
 user='rm551801'
 password='040591'
 dsn='oracle.fiap.com.br/orcl'
 
-#cli = cadastra.cadastraCliente()
+hoje = dt.datetime.now()
+dataHora = hoje.strftime('%d/%m/%Y %H:%M')
+#print(dataHora)
+#cli = cadastra.cadastraCliente(str(dataHora))
 
 
 def create(cliente):
@@ -13,8 +17,8 @@ def create(cliente):
 
             with con.cursor() as cur:
                 sql = """
-                INSERT INTO t_porto_cliente (id_cliente, nm_cliente, nr_cpf)
-                VALUES (:id, :nome, :cpf)
+                INSERT INTO t_porto_cliente (id_cliente, nm_cliente, nr_cpf, dt_cadastro)
+                VALUES (:id, :nome, :cpf, to_date(:data, 'DD/MM/YYYY HH24:MI'))
                 """
                 cur.execute(sql, cliente)
             
@@ -24,7 +28,7 @@ def create(cliente):
         print("Ocorreu um erro ao realizar seu cadastro.")
         raise error
 
-
+#create(cli)
 
 
 def find_all():
@@ -67,7 +71,7 @@ def update(cliente, id):
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
                                          
             with con.cursor() as cur:
-                sql = """UPDATE t_porto_cliente SET nm_cliente=:nome, nr_cpf=:cpf WHERE id_cliente = :id"""
+                sql = """UPDATE t_porto_cliente SET nm_cliente=:nome, nr_cpf=:cpf,dt_cadastro=:data WHERE id_cliente = :id"""
                 cur.execute(sql, { **cliente, 'id': id })
             
             con.commit()
@@ -76,21 +80,25 @@ def update(cliente, id):
         print("Ocorreu um erro ao atualizar seu cadastro.")
         raise erro
 
-#iden = int(input("qual id quer alterar?"))
+iden = int(input("qual id quer alterar?"))
 
-#cliente = find_one_by_id(iden)
-#nome = cliente[1]
-#cpf = cliente[2]
+cliente = find_one_by_id(iden)
+print(cliente)
+nome = cliente[1]
+cpf = cliente[2]
+data= cliente[3]
+print()
 #print("[1] nome: ",nome)
 #print("[2] cpf: ", cpf)
 
-#escolha = int(input("qual informação quer alterar"))
-#if escolha ==1:
-    #nome = str(input("qual o novo nome?"))
-#else:
-    #cpf = int(input("qual o novo nome?"))
-
-#update(cli,2)
+escolha = int(input("qual informação quer alterar"))
+if escolha ==1:
+    nome = str(input("qual o novo nome?"))
+else:
+    cpf = int(input("qual o novo nome?"))
+cli = cadastra.seuCadastro(id=iden,nome=nome,cpf=cpf,data=data)
+print(cli)
+update(cli,iden)
 
 def delete(id):
     try:
@@ -107,5 +115,5 @@ def delete(id):
         print("Ocorreu um erro ao deletar seu cadastro.")
         raise erro
 
-delete(2)
+#delete(2)
 

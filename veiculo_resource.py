@@ -1,9 +1,11 @@
+import datetime as dt
 import oracledb
 import cadastra
 user='rm551801'
 password='040591'
 dsn='oracle.fiap.com.br/orcl'
-
+hoje = dt.datetime.now()
+dataHora = hoje.strftime('%d/%m/%Y %H:%M')
 #vei = cadastra.cadastraV(1)
 
 
@@ -13,8 +15,8 @@ def create(veiculo):
 
             with con.cursor() as cur:
                 sql = """
-                INSERT INTO t_porto_veiculo_cliente (id_veiculo, id_cliente, nr_peso, nr_comprimento, nr_largura, nr_altura, nr_eixos, cd_placa, ds_marca)
-                VALUES (:idveiculo, :id, :peso, :comprimento, :largura, :altura, :eixos, :placa, :marca) """
+                INSERT INTO t_porto_veiculo_cliente (id_veiculo, id_cliente, nr_peso, nr_comprimento, nr_largura, nr_altura, nr_eixos, cd_placa, ds_marca,dt_cadastro)
+                VALUES (:idveiculo, :id, :peso, :comprimento, :largura, :altura, :eixos, :placa, :marca, to_date(:data, 'DD/MM/YYYY HH24:MI')) """
                 cur.execute(sql, veiculo)
             
             con.commit()
@@ -27,7 +29,7 @@ def create(veiculo):
 
 
 
-#def find_all():
+def find_all():
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
             with con.cursor() as cur:
@@ -66,13 +68,14 @@ def update(veiculo, placa):
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
                                          
             with con.cursor() as cur:
-                sql = """UPDATE t_porto_veiculo_cliente SET id_veiculo=:idveiculo, id_cliente=:id, nr_peso=:peso, nr_comprimento=:comprimento, nr_largura=:largura, nr_altura=:altura, nr_eixos=:eixos, ds_marca=:marca WHERE cd_placa = :placa"""
+                sql = """UPDATE t_porto_veiculo_cliente SET id_veiculo=:idveiculo, id_cliente=:id, nr_peso=:peso, nr_comprimento=:comprimento,
+                  nr_largura=:largura, nr_altura=:altura, nr_eixos=:eixos, ds_marca=:marca,dt_cadastro=:data WHERE cd_placa = :placa"""
                 cur.execute(sql, { **veiculo, 'placa': placa })
             
             con.commit()
 
     except Exception as erro:
-        print("Ocorreu um erro ao atualizar o livro.")
+        print("Ocorreu um erro ao atualizar seu veiculo.")
         raise erro
 
 #placa = str(input("digite o a placa do veiculo que cujas informação deseja alterar?"))
@@ -87,6 +90,7 @@ def update(veiculo, placa):
 #eixos = veiculo[6]
 #placa = veiculo[7]
 #marca = veiculo[8]
+#data = dataHora
 
 def seuVeiculo(veiculo):
     print("Qual informação gostaria de alterar? ")

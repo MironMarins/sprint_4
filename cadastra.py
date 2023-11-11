@@ -1,7 +1,11 @@
 import codigo
+import datetime as dt
 listaPlacas = []
 listaIdCliente =[]
-def cadastraV(id):
+hoje = dt.datetime.now()
+dataHora = hoje.strftime('%d/%m/%Y %H:%M')
+
+def cadastraV(id,data):
     
     V = {}
     idveiculo = str(input('id do seu veiculo: '))
@@ -29,9 +33,11 @@ def cadastraV(id):
 
     aux = int(input("por ultimo, quantos eixos seu veiculo possui: "))
     V['eixos'] = aux
-    listaPlacas.append(placa)
+    aux = int(input("por ultimo, quantos eixos seu veiculo possui: "))
+    V['data'] = data
+
     return V
-def seuVeiculo(idveiculo,id,placa,marca,peso,comprimento,largura,altura,eixos):
+def seuVeiculo(idveiculo,id,placa,marca,peso,comprimento,largura,altura,eixos,data):
     V = {}
     V['idveiculo'] = idveiculo
     V['id'] = id
@@ -42,12 +48,12 @@ def seuVeiculo(idveiculo,id,placa,marca,peso,comprimento,largura,altura,eixos):
     V['largura'] = largura
     V['altura'] = altura
     V['eixos'] = eixos
+    V['data'] = data
     return V
 
 
-def cadastraCliente():
+def cadastraCliente(data):
     
-    veiculos = []
     cliente = {}
     aux = str(input("informe seu id: "))
     cliente['id'] = aux
@@ -58,6 +64,8 @@ def cadastraCliente():
     aux = str(input("informe seu CPF: "))
     cliente['cpf'] = aux
 
+    cliente['data'] = data
+
     
     #veiculos.append(cadastraV())
     #cliente['veiculos'] = veiculos
@@ -65,14 +73,19 @@ def cadastraCliente():
     #listaIdCliente.append(idCliente)
     return cliente
 
-def carga(placa):
+def seuCadastro(id,nome,cpf,data):
+    cli = {}
+    cli['id'] = id
+    cli['nome'] = nome
+    cli['cpf'] = cpf
+    cli['data'] = data
+    return cli
+
+def carga(placa,data):
       
     Carga = {} 
     
     Carga['placa'] = placa
-
-    aux = str(input("Qual o tipo de carga externa que seu veiculo esta carregando: "))
-    Carga['CargaTipo'] = aux
 
     aux = float(input("Quanto sua carga pesa em toneladas (0.0): "))
     Carga['peso'] = aux
@@ -80,18 +93,33 @@ def carga(placa):
     aux = float(input("Quanto sua carga mede em comprimento em metros(0.0): "))
     Carga['comprimento'] = aux
 
-    aux = float(input("Qual a largura de sua carga em metros (0.0): "))
-    Carga['largura'] = aux
-
     aux = float(input("Qual a altura de sua carga em metros (0.0): "))
     Carga['altura'] = aux
 
-    aux = int(input("por ultimo, quantos eixos sua carga possui: "))
+    aux = float(input("Qual a largura de sua carga em metros (0.0): "))
+    Carga['largura'] = aux
+
+    aux = int(input("quantos eixos sua carga possui: "))
     Carga['eixos'] = aux
+
+    aux = str(input("por ultimo, qual o tipo de carga externa que seu veiculo esta carregando: "))
+    Carga['CargaTipo'] = aux
     
+    Carga['data'] = data   
     return Carga
 
-
+def suaCarga(placa,peso,comprimento,largura,altura,eixos,tipo,data):
+    V = {}
+    V['placa'] = placa
+    V['peso'] = peso
+    V['comprimento'] = comprimento
+    V['altura'] = altura
+    V['largura'] = largura
+    V['eixos'] = eixos
+    V['CargaTipo'] = tipo
+    aux = int(input("por ultimo, quantos eixos seu veiculo possui: "))
+    V['data'] = data
+    return V
 
 
 
