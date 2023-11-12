@@ -1,13 +1,17 @@
+import datetime as dt
 import menu
 import cadastra
 import altera
 import auxilio
-
+import codigo
+import ressources.cliente_resource as cliente_resource
+import ressources.veiculo_resource as veiculo_resource
 escolha = 0
 print("Seja bem vindo ao S.O.SPorto")
 print("Em que podemos ajuda-lo?")
 opcao = 0
-usuario = []
+hoje = dt.datetime.now()
+dataHora = hoje.strftime('%d/%m/%Y %H:%M')
 
 while escolha != 7 or opcao == "inicio":
     
@@ -17,13 +21,20 @@ while escolha != 7 or opcao == "inicio":
     if escolha == 1: #referente a opção "gostaria de realizar meu cadatro"
         print("=-"*10)
         print("por favor preencha as informações solicitadas: ")
-        cli = cadastra.cadastraCliente() # chama a função cadastraV na pasta cadastraV 
+        id = codigo.ids()
+        cli = cadastra.cadastraCliente(data=dataHora,id=id) # chama a função cadastraV na pasta cadastraV 
+        cliente_resource.create(cli) # adicionará os dados do cliente no banco de dados
         print("=-"*10)
+        print("Agora preencha as informações do seu primeiro veiculo: ")
+        idcliente = cliente_resource.find_one_by_id(id=id)
+        idcliente=idcliente[0]
+        
+        veiculo = cadastra.cadastraV(id=idcliente,data=dataHora)
+        veiculo_resource.create(veiculo)
         print(cli)
-        usuario.append(cli) # adicionará o dicionario cli para a lista usuario
         print("=-"*10)
-        print("por favor anote seu codigo de cadastro")
-        print(cli["id"]) # o id dado pelo programa é muito inportante para a ulização das funcionalidades do programa 
+        print("por favor anote o numero de seu  cadastro")
+        print(id) # o id dado pelo programa é muito inportante para a ulização das funcionalidades do programa 
         print("obrigado por se cadastrar!!!")
         print("=-"*10)
         
@@ -34,24 +45,13 @@ while escolha != 7 or opcao == "inicio":
         print("=-"*10)
         opcao = "checar"
         while opcao == "checar":
-            id = str(input("seu ID de cadastro: "))
-        
-            if id in cadastra.listaIdCliente:# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"         
-                        
-                for info in usuario: # cliente poderá colocar as informações do novo veiculo que quiser adicionar
-                    if info['id'] == id:
-                        idCliente = id
-                        print("=-"*10)
-                        print(info['veiculos'])
-                    
-                        cadastraV = cadastra.cadastraV()# chama o dicionario da função cadastraV
-                        listaVeiculos = info['veiculos']
-                        print(listaVeiculos)
-                        listaVeiculos.append(cadastraV)# aciciona o dicionario na lista veiculos do dicionario "cliente"
-                        print("veiculo adicionado com sucesso!")
-                        print("=-"*10)
-                        opcao = "inicio"
-            else: # o cliente poderá dicidir se quer voltar para o inicio ou tentar repetir a operação de inserir seu codigo
+            listadados =cliente_resource.find_all()
+            print(listadados)
+            id = input("seu ID de cadastro: ")
+                                            
+            print("=-"*10)
+            idcliente = cliente_resource.find_one_by_id(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
+            if idcliente == None: # o cliente poderá decidir se quer voltar para o inicio ou tentar repetir a operação de inserir seu codigo
                 print('esse codigo não consta em nosso banco de dados')
                 print('gostaria de tentar mais uma vez?')
                 print('[1] Sim')
@@ -59,61 +59,33 @@ while escolha != 7 or opcao == "inicio":
                 opcao = int(input())        
             
                 if opcao == 2:
-                    input("aperte [enter] para ser enviado para o inicio")
+                        input("aperte [enter] para ser enviado para o inicio")
+                        opcao = "inicio"
                 elif opcao == 1:
-                   opcao = "checar"
-        
-        print(listaVeiculos)
-        print(info)
+                        opcao = "checar"
+            
+            else: 
+                 idcliente=idcliente[0]
+                 veiculo = cadastra.cadastraV(id=idcliente,data=dataHora) # cliente poderá colocar as informações do novo veiculo que quiser adicionar
+                 veiculo_resource.create(veiculo)
+                 print("veiculo adicionado com sucesso!")
+                 print(veiculo_resource.find_one_by_placa(veiculo['placa']))
+                 print("=-"*10)
+                 opcao = "inicio"
+            
+                
                 
     elif escolha == 3: # referente a opção "gostaria de alterar uma informação"
         print("por favor preencha as informações a seguir: ")
         print("=-"*10)
         opcao = "altera"
         while opcao == "altera": #valor qualquer para entrar no looping while
+            listadados =cliente_resource.find_all()
+            print(listadados)
             id = str(input("seu ID de cadastro: ")) 
-            if id in cadastra.listaIdCliente: # realizará uma busca pelo id, apenas se o id estiver na lista "listaIdCliente"
-                for info in usuario:
-                    if info['id'] == id:
-                        idCliente = id
-                        print("=-"*10)
-                        print(info['veiculos'])
-                        listaVeiculos = info['veiculos']
-                        print("=-"*10)
-                    opcao = "alteraVeiculo" #valor qualquer para entrar no looping while
-                    while opcao == "alteraVeiculo":
-                        placa = str(input("por favor incira a placa do veiculo que gostaria de alterar: "))
-                        if placa in cadastra.listaPlacas: # realizará uma busca pela placa, apenas se o numero da placa estiver na lista "listaPlacas"
-                            for veiculo in listaVeiculos:
-                                if veiculo['placa'] == placa:
-                                    meu_vei = veiculo
-                                    for k, v in meu_vei.items():
-                                            print(f'{k}={v}')
-                            opcao = 'sair' # valor qualquer para sair do looping while   
-                            print(veiculo)   
-                        else:
-                             print('essa placa não consta em nosso banco de dados')
-                             print('gostaria de tentar mais uma vez?')
-                             print('[1] Sim')
-                             print('[2] Não')
-                             opcao = int(input())
-                             if opcao == 2:
-                                input("aperte [enter] para ser enviado para o inicio")
-                             elif opcao == 1:
-                                  opcao = "alteraVeiculo"
-                    print("=-"*10)                                        
-                    alteracao = str(input("escreva qual informação gostaria de alterar?")) # pede o nome da chave que quer alterar
-                    valor = input("Qual o novo valor dessa alteração?") # pede o novo valor da alteraração
-                    valor = altera.alteraV(alteracao=alteracao,valor=valor) # coloca chave e valor na função "alteraV" 
-                    veiculo[alteracao] = valor
-                    print(veiculo)
-                    print("informação alterada com sucesso!!")
-                    print("=-"*10)
-                    print(info)
-                    print(usuario)
-                    opcao = "inicio"
-        
-            else:
+            print("=-"*10)
+            idcliente = cliente_resource.find_one_by_id(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
+            if idcliente == None: # o cliente poderá decidir se quer voltar para o inicio ou tentar repetir a operação de inserir seu codigo
                 print('esse codigo não consta em nosso banco de dados')
                 print('gostaria de tentar mais uma vez?')
                 print('[1] Sim')
@@ -124,26 +96,114 @@ while escolha != 7 or opcao == "inicio":
                     input("aperte [enter] para ser enviado para o inicio")
                     opcao = "sair"# valor qualquer para sair do looping while
                 elif opcao == 1:
-                   opcao = "altera"   
+                   opcao = "altera"
+            else:
+                 opcao = "alteraVeiculo" #valor qualquer para entrar no looping while
+                 while opcao == "alteraVeiculo":
+                       placa = str(input("por favor incira a placa do veiculo que gostaria de alterar: "))
+                       veiculo = veiculo_resource.find_one_by_placa(str(placa))
+                       if veiculo == None: # realizará uma busca pela placa, apenas se o numero da placa estiver na lista "listaPlacas"
+                            print('essa placa não consta em nosso banco de dados')
+                            print('gostaria de tentar mais uma vez?')
+                            print('[1] Sim')
+                            print('[2] Não')
+                            opcao = int(input())
+                            if opcao == 2:
+                                input("aperte [enter] para ser enviado para o inicio")
+                                opcao = "inicio"
+                            elif opcao == 1:
+                                 opcao = "alteraVeiculo"
+                            
+                       else:
+                              
+                            menu.seuVeiculo(veiculo=veiculo)
+                            print(veiculo)   
+                            print("=-"*10)
+                            veiculo = veiculo_resource.find_one_by_placa(placa=placa)
+                            idveiculo = veiculo[0]
+                            id = veiculo[1]
+                            peso = veiculo[2]
+                            comprimento = veiculo[3]
+                            largura = veiculo[4]
+                            altura = veiculo[5]
+                            eixos = veiculo[6]
+                            placa = veiculo[7]
+                            marca = veiculo[8]
+                            data = veiculo[9]
+
+                            print(menu.seuVeiculo(veiculo))
+                            escolha = int(input("qual informação deseja alterar?"))
+                            if escolha ==1:
+                                    peso = float(input("qual o novo peso?"))
+                            elif escolha ==2:
+                                    comprimento = float(input("qual o novo comprimento?"))
+                            elif escolha ==3:
+                                        largura = float(input("qual a nova largura?"))
+                            elif escolha ==4:
+                                    altura = float(input("qual a nova altura?"))
+                            elif escolha ==5:
+                                    eixos = int(input("quantos eixos?"))
+                            elif escolha ==6:
+                                    placa = str(input("qual a nova plana?"))
+                            elif escolha ==7:
+                                    marca = str(input("qual a nova marca?"))
+                            vei = cadastra.seuVeiculo(idveiculo=idveiculo,id=id,peso=peso,comprimento=peso,largura=largura,altura=altura,eixos=eixos,placa=placa,marca=marca,data=data)
+                            veiculo_resource.update(vei,placa)                                        
+                            print(veiculo)
+                            print("informação alterada com sucesso!!")
+                            print("=-"*10)
+                            opcao = "inicio"
+                 
     elif escolha == 4: #consulta referente a opção "gostaria de consultar meus dados" da função "menu" em "menu.py" 
-        desc = input('Informe seu id de usuario: ')
-        for info in usuario: #mostra as informações do usuario em forma de coluna
-            if info['id'] == desc:
-                print("suas informções de cadastro são:")
-                for k, v in info.items():
-                    print(f'{k}={v}')
-        
-                
-        listaVeiculos = info['veiculos']
-        veiculo = 0
-        for vei in listaVeiculos: #mostra a lista de veiculos em forma de colunas
-            veiculo = veiculo + 1
-            print("-=-=-=-=-=-==-=-=-=- veiculo", veiculo,"=-=-=-=-=-=-=-=-=-=-=-=-=-=-") # separa um veiculo de outro
-            for k, v in vei.items():
-                print(f'{k}={v}')
-        print("gostaria de ver o resumo de suas chamadas?" )
-        print("[1] Sim")
-        print("[2] Não")        
+        opcao = 'consulta'
+        while opcao =='consulta':
+              id = str(input("por favor digite seu codigo de usuario"))
+              tuplacliente = cliente_resource.find_one_by_id(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
+              if tuplacliente == None: # o cliente poderá decidir se quer voltar para o inicio ou tentar repetir a operação de inserir seu codigo
+                 print('esse codigo não consta em nosso banco de dados')
+                 print('gostaria de tentar mais uma vez?')
+                 print('[1] Sim')
+                 print('[2] Não')
+                 opcao = int(input())        
+            
+                 if opcao == 2:
+                    input("aperte [enter] para ser enviado para o inicio")
+                    opcao = "sair"# valor qualquer para sair do looping while
+              
+                 elif opcao == 1:
+                    opcao = "consulta"
+              else:
+                   print("suas informções de cadastro são:")
+                   print('id:', tuplacliente[0])
+                   print('nome:', tuplacliente[1])
+                   print('cpf:', tuplacliente[2])
+                   print('data de cadastro:', tuplacliente[3])
+                   print('codigo de cliente:', tuplacliente[4])
+                   print("=-"*10)
+                   print("gostaria de ver as informações de um veiculo especifico?")
+                   print("[1] sim")
+                   print("[2] não")
+                   opcao = int(input())
+        if opcao == 1:
+             placa = str(input("for favor nos informe a placa desse veiculo: "))
+             veiculo_consulta=veiculo_resource.find_one_by_placa(placa=placa)
+             print("suas informções de cadastro são:")
+             print('id_veiculo:', veiculo_consulta[0])
+             print('id_cliente:', veiculo_consulta[1])
+             print('peso:', veiculo_consulta[2])
+             print('comprimento:', veiculo_consulta[3])
+             print('largura:', veiculo_consulta[4])
+             print('altura:', veiculo_consulta[5])
+             print('eixos:', veiculo_consulta[6])
+             print('placa:', veiculo_consulta[7])
+             print('marca:', veiculo_consulta[8])
+             print('data de cadastro do veiculo:', veiculo_consulta[9])
+##############################################################################################################################################################################################
+        elif opcao == 2:     
+             opcao == "inicio"
+             print("gostaria de ver o resumo de suas chamadas?" )
+             print("[1] Sim")
+             print("[2] Não")        
         opcao = int(input())
         if opcao == 2:
              input("aperte [enter] para ser enviado para o meu incial")
@@ -389,61 +449,50 @@ while escolha != 7 or opcao == "inicio":
         print("[2] um veiculo de minha conta")
         opcao = int(input())# o cliente poderá escolher se quer apagar a propria conta por completo ou apenas um um veiculo de sua conta
         if opcao == 1:
-            idCliente = str(input('Por favor informe seu id de cadastro: ')) 
-            i = 0
-            for i in range(len(usuario)):
-                cli = usuario[i]
-                if cli['id'] == idCliente:
-                    usuario.pop(i) # assim que o valor id for encontrado em um dicionario "cliente" da lista "usuario" ele sera apagado
-                    break
-            print(usuario)
-            print("seu cadastro foi apagado com sucesso")
-            print("=-"*10)
-        elif opcao == 2:
-            id = str(input("Por favor informe seu id de cadastro: "))
-        for info in usuario: # o id do usuario é buscado
-            if info['id'] == id: # o id é encontrado 
-                idCliente = id
-                print("=-"*10)
-                print(info['veiculos'])
-                listaVeiculos = info['veiculos']
-                veiculo = 0
-                for vei in listaVeiculos: # uma lista de veiculos é aberta na forma de colunas
-                    veiculo = veiculo + 1 
-                    print("=-=-=-=-=-=-=-=-=-=-=-==veiculo", veiculo,"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=") #separando os veiculos para a melhor visulização
-                    
-                    for k, v in vei.items():
-                        print(f'{k}={v}')
-                print("=-"*10)
-                while opcao !=0:
-                    placa = str(input("placa do seu veiculo que quer deletar: "))#ao que colocar o codigo correto da placa de carro
-                    print("=-"*10)
-                    opcao = 1
-                    N_vei = 0
-                    for vei in listaVeiculos:
-                        N_vei = N_vei + 1
-                        if vei['placa'] == placa: #assim que o veiculo for encontrado
-                            meu_vei = N_vei
-                            placa = vei['placa']
-                            print("esse é seu veiculo?")# uma opção aparecerar confirmando se esse fo o veiculo correto
-                            print("[1] Sim")
-                            print("[2] Não")
-                            print("=-"*10)
-                            for k, v in vei.items():
-                                print(f'{k}={v}')
+            opcao = 'deletar'
+            while opcao == 'deletar':
+                idCliente = str(input('Por favor informe seu id de cadastro: ')) 
+                cliente=cliente_resource.find_one_by_id(id=idCliente)
+                print(cliente)
+                if cliente == None:
+                    print("seu codigo não foi encontrado gostaria de tentar de novo?")
+                    print("[1] sim")
+                    print("[2] não")
                     opcao = int(input())
-                    if opcao == 2:
-                        print("por favor, informe a placa de seu veiculo novamente") # caso não seja o usuario podera colocar o codigo da placa novamente
-                    elif opcao == 1: # assim que a placa do veiculo for confimada pelo usuario o veiculo será apagado da "veiculos", da chave "veiculo", do dicionario cliente
-                        # da lista "usuario"
+                    if opcao == 1:
+                        opcao = 'deletar'
+                    else:
+                         opcao = "inicio"
+                else:
+                    cliente_resource.delete(id=idCliente)
+                    print("aperte [enter] para ser enviado para o menu inicial")
+                    opcao = input ("seu cadastro foi apagado com sucesso")
+                    opcao = "inicio"
+                    print("=-"*10)
+        elif opcao == 2:
+             opcao = 'deletarCarro'
+             while opcao == 'deletarCarro':
+                   placa = str(input('Por favor o numero de sua placa do carro que deseja deletar de sua conta: '))
+                   meuCarro = veiculo_resource.find_one_by_placa(placa=placa)
+                   print(meuCarro)
+                   if meuCarro == None: # o id é encontrado 
+                      print("a placa de seu carro não foi encontrada em nosso banco de dados")
+                      print("gostaria de tentar realizar essa operação novamente?")
+                      print("[1] sim")
+                      print("[2] não")
+                      opcao = int(input())
+                      if opcao == 1:
+                         opcao = 'deletarCarro'
+                      else:
+                          opcao = "inicio"
+                   else:
                         
-                        print(listaVeiculos)
-
-                        listaVeiculos.pop(meu_vei-1)
-                        print("seu veiculo foi deletado com sucesso")
+                        veiculo_resource.delete(placa=placa)
+                        print("seu cadastro foi apagado com sucesso")
+                        opcao = input ("aperte [enter] para ser enviado para o menu inicial")
+                        opcao = "inicio"
                         print("=-"*10)
-                        print(listaVeiculos)
-                        opcao = 0 
+                        
        
     elif escolha == 7:
          print("Obrigado por utilizar nosso aplicativo")

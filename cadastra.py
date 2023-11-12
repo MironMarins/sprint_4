@@ -1,17 +1,11 @@
-import codigo
 import datetime as dt
-listaPlacas = []
-listaIdCliente =[]
-hoje = dt.datetime.now()
-dataHora = hoje.strftime('%d/%m/%Y %H:%M')
+
 
 def cadastraV(id,data):
     
     V = {}
-    idveiculo = str(input('id do seu veiculo: '))
-    V['idveiculo'] = idveiculo
-
-    V['id'] = id
+    
+    V['CodigoCliente'] = id
     
     placa = str(input('Por favor nos Informe numero da placa de seu veiculo: '))
     V['placa'] = placa
@@ -33,7 +27,7 @@ def cadastraV(id,data):
 
     aux = int(input("por ultimo, quantos eixos seu veiculo possui: "))
     V['eixos'] = aux
-    aux = int(input("por ultimo, quantos eixos seu veiculo possui: "))
+    
     V['data'] = data
 
     return V
@@ -52,11 +46,10 @@ def seuVeiculo(idveiculo,id,placa,marca,peso,comprimento,largura,altura,eixos,da
     return V
 
 
-def cadastraCliente(data):
+def cadastraCliente(data,id):
     
     cliente = {}
-    aux = str(input("informe seu id: "))
-    cliente['id'] = aux
+    cliente['id'] = id
     
     aux = str(input("informe seu nome completo: "))
     cliente['nome'] = aux
@@ -75,7 +68,7 @@ def cadastraCliente(data):
 
 def seuCadastro(id,nome,cpf,data):
     cli = {}
-    cli['id'] = id
+    cli['CodigoCliente'] = id
     cli['nome'] = nome
     cli['cpf'] = cpf
     cli['data'] = data

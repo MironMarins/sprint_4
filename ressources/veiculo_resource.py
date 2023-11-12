@@ -1,6 +1,6 @@
 import datetime as dt
 import oracledb
-import cadastra
+#import cadastra
 user='rm551801'
 password='040591'
 dsn='oracle.fiap.com.br/orcl'
@@ -16,7 +16,7 @@ def create(veiculo):
             with con.cursor() as cur:
                 sql = """
                 INSERT INTO t_porto_veiculo_cliente (id_veiculo, id_cliente, nr_peso, nr_comprimento, nr_largura, nr_altura, nr_eixos, cd_placa, ds_marca,dt_cadastro)
-                VALUES (:idveiculo, :id, :peso, :comprimento, :largura, :altura, :eixos, :placa, :marca, to_date(:data, 'DD/MM/YYYY HH24:MI')) """
+                VALUES (seq_id.nextval, :CodigoCliente, :peso, :comprimento, :largura, :altura, :eixos, :placa, :marca, to_date(:data, 'DD/MM/YYYY HH24:MI')) """
                 cur.execute(sql, veiculo)
             
             con.commit()
@@ -43,7 +43,7 @@ def find_all():
 
 
 
-def find_one_by_id(placa):
+def find_one_by_placa(placa):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
             with con.cursor() as cur:
@@ -57,10 +57,26 @@ def find_one_by_id(placa):
                     return resp[0]
             
     except Exception as error:
-        print("Ocorreu um erro ao consultar os livros")
+        print("Ocorreu um erro ao consultar seu veiculo")
         raise error
 
-#print(find_one_by_id('456-fsdf'))
+def find_one_by_idCliente(id):
+    try:
+        with oracledb.connect(user=user, password=password, dsn=dsn) as con:
+            with con.cursor() as cur:
+                sql = 'SELECT * FROM t_porto_veiculo_cliente WHERE id_cliente = :id'
+                cur.execute(sql, { 'id': id })
+                resp = cur.fetchall()
+
+                if len(resp) == 0:
+                    return None
+                else:
+                    return resp[0]
+            
+    except Exception as error:
+        print("Ocorreu um erro ao seu veiculo")
+        raise error
+
 
 
 def update(veiculo, placa):
@@ -92,21 +108,13 @@ def update(veiculo, placa):
 #marca = veiculo[8]
 #data = dataHora
 
-def seuVeiculo(veiculo):
-    print("Qual informação gostaria de alterar? ")
-    print("[1] peso: ",veiculo[2])
-    print("[2] comprimento: ",veiculo[3])
-    print("[3] largura: ",veiculo[4])
-    print("[4] altura: ",veiculo[5])
-    print("[5] eixos: ",veiculo[6])
-    print("[6] placa: ",veiculo[7])
-    print("[7] marca: ",veiculo[8])
+
 
 #print(seuVeiculo(veiculo))
 
 #escolha = int(input("qual informação quer alterar"))
 #if escolha ==1:
-    #peso = float(input("qual o novo peos?"))
+    #peso = float(input("qual o novo peso?"))
 #elif escolha ==2:
     #comprimento = float(input("qual o novo comprimento?"))
 #elif escolha ==3:
@@ -118,7 +126,7 @@ def seuVeiculo(veiculo):
 #elif escolha ==6:
     #placa = str(input("qual a nova plana?"))
 #elif escolha ==7:
-    #marca = str(input("qual o nova marca?"))
+    #marca = str(input("qual a nova marca?"))
 #vei = cadastra.seuVeiculo(idveiculo=idveiculo,id=id,peso=peso,comprimento=peso,largura=largura,altura=altura,eixos=eixos,placa=placa,marca=marca)
 #update(vei,placa)
 
