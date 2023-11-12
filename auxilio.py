@@ -108,7 +108,26 @@ def resumoChamada(idProblema,idCliente,idAuxilio,idVeiculo,idEspecificacao,idCar
     resumoChamada['idCodigo'] = idCodigo   
     return resumoChamada 
 
-
+def dbResumoChamada(tuplaChamada):
+                print(tuplaChamada)
+                idchamada = tuplaChamada[0]
+                print("o id dessa chamada", idchamada)
+                clienteTupla = cliente_resource.find_one_by_id(tuplaChamada[2])
+                print("seus dados de cliente ", clienteTupla )
+                veiculoTupla = veiculo_resource.find_one_by_idVeiculo(tuplaChamada[4])
+                print("dados de seu veiculos ", veiculoTupla)
+                idCarga = carga_resource.find_one_by_id(tuplaChamada[6])
+                print("a carga que seu veiculo esta comportando ")
+                problemaTupla = auxilio_resource.find_one_by_id_problema(tuplaChamada[1])
+                print("seu problema ", problemaTupla)
+                especificacaoTupla = auxilio_resource.find_one_by_id_especificacao(tuplaChamada[5])
+                print("as especificação de seu problema  ", especificacaoTupla)
+                auxilioTupla = auxilio_resource.find_one_by_id_auxilio(tuplaChamada[3])
+                print("nossa solução para seu porblema ", auxilioTupla)
+                dtChamada = tuplaChamada[7]
+                print("a data de sua chamada ", dtChamada)
+                cdChamada = tuplaChamada[8]
+                print("o codigo dessa chamda", cdChamada)
 
     
 

@@ -210,32 +210,30 @@ while escolha != 7 or opcao == "inicio":
         opcao = int(input())
         if opcao == 2:
              input("aperte [enter] para ser enviado para o meu incial")
+             opcao = 'inicio'
         elif opcao == 1:
              print("entrando no banco de dados de chamadas")
              opcao = "chamadas" # valor generico para entra no looping while
              while opcao == "chamadas": 
-                    idChamada = str(input("por favor informe o id da chamada que gostaria de verificar: "))
-                    listaChamadas = auxilio.chamada
+                    idChamada = str(input("por favor informe o codico da chamada que gostaria de verificar: "))
+                    chamadasTupla = chamada_resource.find_one_by_codigo(idChamada)
                     
-                    if idChamada in auxilio.listaIdChamadas:
-                        for info in listaChamadas:# mostrará o resumo da chamas em forma de coluna
-                            if info['idChamada'] == idChamada:
-                                print("suas informções de cadastro são:")
-                                for k, v in info.items():
-                                    print(f'{k}={v}')
-                        opcao = "sair"        
-                           
+                    if chamadasTupla == None:
+                         print("o id dessa chamada não foi encontrado") 
+                         print("gostaria de tentar novamente? ")
+                         print("[1] Sim")
+                         print("[2] Não")
+                         opcao = int(input())
+                         if opcao == 1:
+                              opcao = "chamadas"
+                         elif opcao ==2:
+                              opcao = str(input("precione [enter] para retornar ao inicio do programa"))
+                              opcao = "inicio"
+                         
                     else:
-                        print('esse codigo não consta em nosso banco de dados')
-                        print('gostaria de tentar mais uma vez?')
-                        print('[1] Sim')
-                        print('[2] Não')
-                        opcao = int(input())
-                    if opcao == 2:
-                        input("aperte [enter] para ser enviado para o inicio")
-                        opcao = "sair" #valor generico para sair do looping while
-                    elif opcao == 1:
-                        opcao = "chamadas"    
+                         auxilio.dbResumoChamada(chamadasTupla)        
+                           
+                      
  ############################################################################################################################################################################                                          
                     
                     
@@ -520,26 +518,8 @@ while escolha != 7 or opcao == "inicio":
         opcao = int(input())
         if opcao == 1: # mostra dicionario do resumo da chamada em forma de colunas
             tuplaChamada =chamada_resource.find_one_by_id(chamada=codigoChamada)
-            print(tuplaChamada)
-            idchamada = tuplaChamada[0]
-            print("o id dessa chamada", idchamada)
-            clienteTupla = cliente_resource.find_one_by_id(tuplaChamada[2])
-            print("seus dados de cliente ", clienteTupla )
-            veiculoTupla = veiculo_resource.find_one_by_idVeiculo(tuplaChamada[4])
-            print("dados de seu veiculos ", veiculoTupla)
-            idCarga = carga_resource.find_one_by_id(tuplaChamada[6])
-            print("a carga que seu veiculo esta comportando ")
-            problemaTupla = auxilio_resource.find_one_by_id_problema(tuplaChamada[1])
-            print("seu problema ", problemaTupla)
-            especificacaoTupla = auxilio_resource.find_one_by_id_especificacao(tuplaChamada[5])
-            print("as especificação de seu problema  ", especificacaoTupla)
-            auxilioTupla = auxilio_resource.find_one_by_id_auxilio(tuplaChamada[3])
-            print("nossa solução para seu porblema ", auxilioTupla)
             
-            dtChamada = tuplaChamada[7]
-            print("a data de sua chamada ", dtChamada)
-            cdChamada = tuplaChamada[8]
-            print("o codigo dessa chamda", cdChamada)
+            auxilio.dbResumoChamada(tuplaChamada)
             
                     
 
