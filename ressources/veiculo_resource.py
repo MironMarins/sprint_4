@@ -60,11 +60,11 @@ def find_one_by_placa(placa):
         print("Ocorreu um erro ao consultar seu veiculo")
         raise error
 
-def find_one_by_idCliente(id):
+def find_one_by_idVeiculo(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
             with con.cursor() as cur:
-                sql = 'SELECT * FROM t_porto_veiculo_cliente WHERE id_cliente = :id'
+                sql = 'SELECT * FROM t_porto_veiculo_cliente WHERE id_veiculo = :id'
                 cur.execute(sql, { 'id': id })
                 resp = cur.fetchall()
 

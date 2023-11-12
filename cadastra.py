@@ -98,7 +98,8 @@ def carga(placa,data):
     aux = str(input("por ultimo, qual o tipo de carga externa que seu veiculo esta carregando: "))
     Carga['CargaTipo'] = aux
     
-    Carga['data'] = data   
+    Carga['data'] = data
+       
     return Carga
 
 def suaCarga(placa,peso,comprimento,largura,altura,eixos,tipo,data):
@@ -110,7 +111,6 @@ def suaCarga(placa,peso,comprimento,largura,altura,eixos,tipo,data):
     V['largura'] = largura
     V['eixos'] = eixos
     V['CargaTipo'] = tipo
-    aux = int(input("por ultimo, quantos eixos seu veiculo possui: "))
     V['data'] = data
     return V
 

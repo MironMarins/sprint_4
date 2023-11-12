@@ -17,8 +17,8 @@ def create(carga):
 
             with con.cursor() as cur:
                 sql = """
-                INSERT INTO t_porto_veiculo_carga (cd_placa, nr_peso, nr_comprimento, nr_altura, nr_largura, nr_eixos, ds_tipo, dt_cadastro)
-                VALUES (:placa, :peso, :comprimento, :altura, :largura, :eixos, :CargaTipo, to_date(:data, 'DD/MM/YYYY HH24:MI')) """
+                INSERT INTO t_porto_veiculo_carga (cd_placa, nr_peso, nr_comprimento, nr_altura, nr_largura, nr_eixos, ds_tipo, dt_cadastro, id_carga)
+                VALUES (:placa, :peso, :comprimento, :altura, :largura, :eixos, :CargaTipo, to_date(:data, 'DD/MM/YYYY HH24:MI', seq_id.nextval)) """
                 cur.execute(sql, carga)
             
             con.commit()
@@ -45,7 +45,7 @@ def find_all():
 
 
 
-def find_one_by_id(placa):
+def find_one_by_placa(placa):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
             with con.cursor() as cur:
@@ -63,7 +63,22 @@ def find_one_by_id(placa):
         raise error
 
 #print(find_one_by_id('1234-rm'))
+def find_one_by_id(id):
+    try:
+        with oracledb.connect(user=user, password=password, dsn=dsn) as con:
+            with con.cursor() as cur:
+                sql = 'SELECT * FROM t_porto_veiculo_carga WHERE id_carga = :id'
+                cur.execute(sql, { 'id': id })
+                resp = cur.fetchall()
 
+                if len(resp) == 0:
+                    return None
+                else:
+                    return resp[0]
+            
+    except Exception as error:
+        print("Ocorreu um erro ao consultar sua carga")
+        raise error
 
 def update(carga, placa):
     try:

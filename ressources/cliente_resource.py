@@ -1,13 +1,15 @@
 #import cadastra
 import oracledb
 import datetime as dt
+#import codigo
 user='rm551801'
 password='040591'
 dsn='oracle.fiap.com.br/orcl'
 hoje = dt.datetime.now()
 dataHora = hoje.strftime('%d/%m/%Y %H:%M')
 #print(dataHora)
-#cli = cadastra.cadastraCliente(str(dataHora),'1235')
+
+#cli = cadastra.cadastraCliente(str(dataHora),codigo.ids())
 
 
 def create(cliente):

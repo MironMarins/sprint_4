@@ -1,6 +1,5 @@
 import codigo
-chamada = []
-listaIdChamadas = []
+
 
 def auxilio():
         ajuda = {}
@@ -96,22 +95,21 @@ def escolhaModal(pesoTotal,dic_modal):
     return modalT
           
                 
-def resumoChamada(idCliente,placa,pesoTotal,comprimentoTotal,alturaTotal,larguraTotal,problemaChamada,especificacao,solucao):
+def resumoChamada(idProblema,idCliente,idAuxilio,idVeiculo,idEspecificacao,idCarga,data,idCodigo):
     resumoChamada = {}
-    idChamada = codigo.idsChamadas()
-    resumoChamada['idChamada'] = idChamada
+        
+    resumoChamada['idProblema'] = idProblema
     resumoChamada['idCliente'] = idCliente
-    resumoChamada['placaVeiculo'] = placa
-    resumoChamada['pesoTotal'] = pesoTotal
-    resumoChamada['comprimentTotal'] = comprimentoTotal
-    resumoChamada['alturaTotal'] = alturaTotal
-    resumoChamada['larguraTotal'] = larguraTotal
-    resumoChamada['problemaChamada'] = problemaChamada
-    resumoChamada['especificacaoProblema'] = especificacao
-    resumoChamada['solucao'] = solucao
-    chamada.append(resumoChamada)
-    listaIdChamadas.append(idChamada)
+    resumoChamada['idAuxilio'] = idAuxilio
+    resumoChamada['idVeiculo'] = idVeiculo
+    resumoChamada['idEspecificacao'] = idEspecificacao
+    resumoChamada['idCarga'] = idCarga
+    resumoChamada['dtChamada'] = data
+    resumoChamada['idCodigo'] = idCodigo   
     return resumoChamada 
+
+
+
     
 
 
