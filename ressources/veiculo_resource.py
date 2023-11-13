@@ -111,5 +111,20 @@ def delete(placa):
         print("Ocorreu um erro ao deletar o livro.")
         raise erro
 
+def deletePorId(id):
+    try:
+        with oracledb.connect(user=user, password=password, dsn=dsn) as con:
+
+            with con.cursor() as cur:
+                sql = 'DELETE FROM t_porto_veiculo_cliente WHERE id_cliente = :id'
+                cur.execute(sql, { 'id': id })
+                affected_rows = cur.rowcount
+            con.commit()
+            return  affected_rows
+
+    except Exception as erro:
+        print("Ocorreu um erro ao deletar o livro.")
+        raise erro
+
 
 

@@ -589,7 +589,9 @@ while escolha != 7 or opcao == "inicio":
                     else:
                          opcao = "inicio"
                 else:
-                    cliente_resource.delete(id=idCliente)
+                    chamada_resource.deletePorIdCliente(id=cliente[4])
+                    veiculo_resource.deletePorId(id=cliente[4])
+                    cliente_resource.delete(codigo=idCliente)
                     opcao = input ("seu cadastro foi apagado com sucesso")
                     print("aperte [enter] para ser enviado para o menu inicial")
                     opcao = "inicio"
@@ -611,7 +613,7 @@ while escolha != 7 or opcao == "inicio":
                       else:
                           opcao = "inicio"
                    else:
-                        
+                        chamada_resource.deletePorIdVeiculo(id=meuCarro[0])
                         veiculo_resource.delete(placa=placa)
                         print("seu cadastro foi apagado com sucesso")
                         opcao = input ("aperte [enter] para ser enviado para o menu inicial")

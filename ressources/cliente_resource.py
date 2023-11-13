@@ -97,13 +97,13 @@ def update(cliente, id):
 
 
 
-def delete(id):
+def delete(codigo):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
 
             with con.cursor() as cur:
-                sql = 'DELETE FROM t_porto_cliente WHERE cd_cliente = :id'
-                cur.execute(sql, { 'id': id })
+                sql = 'DELETE FROM t_porto_cliente WHERE cd_cliente = :codigo'
+                cur.execute(sql, { 'codigo': codigo })
                 affected_rows = cur.rowcount
             con.commit()
             return  affected_rows

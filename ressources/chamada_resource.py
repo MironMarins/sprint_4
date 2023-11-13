@@ -94,25 +94,13 @@ def update(veiculo, placa):
 
 
 
-def seuVeiculo(veiculo):
-    print("Qual informação gostaria de alterar? ")
-    print("[1] peso: ",veiculo[2])
-    print("[2] comprimento: ",veiculo[3])
-    print("[3] largura: ",veiculo[4])
-    print("[4] altura: ",veiculo[5])
-    print("[5] eixos: ",veiculo[6])
-    print("[6] placa: ",veiculo[7])
-    print("[7] marca: ",veiculo[8])
-
-
-
-def delete(placa):
+def deletePorIdVeiculo(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
 
             with con.cursor() as cur:
-                sql = 'DELETE FROM t_porto_veiculo_cliente WHERE cd_placa = :placa'
-                cur.execute(sql, { 'placa': placa })
+                sql = 'DELETE FROM t_porto_chamada WHERE id_veiculo = :id'
+                cur.execute(sql, { 'id': id })
                 affected_rows = cur.rowcount
             con.commit()
             return  affected_rows
@@ -121,5 +109,19 @@ def delete(placa):
         print("Ocorreu um erro ao deletar o livro.")
         raise erro
 
+def deletePorIdCliente(id):
+    try:
+        with oracledb.connect(user=user, password=password, dsn=dsn) as con:
+
+            with con.cursor() as cur:
+                sql = 'DELETE FROM t_porto_chamada WHERE id_cliente = :id'
+                cur.execute(sql, { 'id': id })
+                affected_rows = cur.rowcount
+            con.commit()
+            return  affected_rows
+
+    except Exception as erro:
+        print("Ocorreu um erro ao deletar o livro.")
+        raise erro
 #delete('456-fsdf')
 
