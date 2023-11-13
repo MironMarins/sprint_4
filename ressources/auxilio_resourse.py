@@ -15,9 +15,9 @@ def find_all_problemas():
     except Exception as error:
         print("Ocorreu um erro")
         raise error
-tuplaP = find_all_problemas()
-for i in range(len(tuplaP)):
-    print("["+str(tuplaP[i][0])+"] "+ str(tuplaP[i][1]))
+#tuplaP = find_all_problemas()
+#for i in range(len(tuplaP)):
+    #print("["+str(tuplaP[i][0])+"] "+ str(tuplaP[i][1]))
 
 def find_one_by_id_problema(id):
     try:
@@ -48,15 +48,15 @@ def find_all_especificacao():
     except Exception as error:
         print("Ocorreu um erro")
         raise error
-tuplaE = find_all_especificacao()
-for i in range(len(tuplaE)):
-    print("["+str(tuplaE[i][0])+"] "+ str(tuplaE[i][1]))
+#tuplaE = find_all_especificacao()
+#for i in range(len(tuplaE)):
+    #print("["+str(tuplaE[i][0])+"] "+ str(tuplaE[i][1]))
 
 def find_one_by_id_especificacao(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
             with con.cursor() as cur:
-                sql = 'SELECT * FROM t_porto_especifacacao WHERE id_especificacao = :id'
+                sql = 'SELECT * FROM t_porto_especificacao WHERE id_especicacao = :id'
                 cur.execute(sql, { 'id': id })
                 resp = cur.fetchall()
 
@@ -69,6 +69,8 @@ def find_one_by_id_especificacao(id):
         print("Ocorreu um erro na consulta ao tipo de especificacao")
         raise error
 
+
+
 def find_all_auxilio():
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -80,9 +82,9 @@ def find_all_auxilio():
     except Exception as error:
         print("Ocorreu um erro")
         raise error
-tuplaE = find_all_especificacao()
-for i in range(len(tuplaE)):
-    print("["+str(tuplaE[i][0])+"] "+ str(tuplaE[i][1]))
+#tuplaE = find_all_especificacao()
+#for i in range(len(tuplaE)):
+    #print("["+str(tuplaE[i][0])+"] "+ str(tuplaE[i][1]))
 
 def find_one_by_id_auxilio(id):
     try:

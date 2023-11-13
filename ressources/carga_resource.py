@@ -8,7 +8,7 @@ dsn='oracle.fiap.com.br/orcl'
 hoje = dt.datetime.now()
 dataHora = hoje.strftime('%d/%m/%Y %H:%M')
 #print(dataHora)
-#vei = cadastra.carga('1234-rm')
+#vei = cadastra.carga(placa='4678',data=dataHora)
 
 
 def create(carga):
@@ -17,8 +17,8 @@ def create(carga):
 
             with con.cursor() as cur:
                 sql = """
-                INSERT INTO t_porto_veiculo_carga (cd_placa, nr_peso, nr_comprimento, nr_altura, nr_largura, nr_eixos, ds_tipo, dt_cadastro, id_carga)
-                VALUES (:placa, :peso, :comprimento, :altura, :largura, :eixos, :CargaTipo, to_date(:data, 'DD/MM/YYYY HH24:MI', seq_id.nextval)) """
+                INSERT INTO t_porto_veiculo_carga (cd_placa, nr_peso, nr_comprimento, nr_altura, nr_largura, nr_eixos, ds_tipo, dt_cadastro, id_carga, cd_carga)
+                VALUES (:placa, :peso, :comprimento, :altura, :largura, :eixos, :CargaTipo, to_date(:data, 'DD/MM/YYYY HH24:MI'),seq_idcarga.nextval,:codigo) """
                 cur.execute(sql, carga)
             
             con.commit()
@@ -27,7 +27,6 @@ def create(carga):
         print("Ocorreu um erro ao cadastrar sua carga.")
         raise error
 
-#create(vei)
 
 
 
@@ -79,6 +78,22 @@ def find_one_by_id(id):
     except Exception as error:
         print("Ocorreu um erro ao consultar sua carga")
         raise error
+def find_one_by_codigo(codigo):
+    try:
+        with oracledb.connect(user=user, password=password, dsn=dsn) as con:
+            with con.cursor() as cur:
+                sql = 'SELECT * FROM t_porto_veiculo_carga WHERE cd_carga = :codigo'
+                cur.execute(sql, { 'codigo': codigo })
+                resp = cur.fetchall()
+
+                if len(resp) == 0:
+                    return None
+                else:
+                    return resp[0]
+            
+    except Exception as error:
+        print("Ocorreu um erro ao consultar sua carga")
+        raise error
 
 def update(carga, placa):
     try:
@@ -96,15 +111,15 @@ def update(carga, placa):
         raise erro
 
 #placa = str(input("digite o a placa do veiculo que cujas informação deseja alterar?"))
-placa = '1234-rm'
-carga = find_one_by_id('1234-rm')
-peso = carga[1]
-comprimento = carga[2]
-largura = carga[4]
-altura = carga[3]
-eixos = carga[5]
-tipo = carga[6]
-data = dataHora
+#placa = '1234-rm'
+#carga = find_one_by_id('1234-rm')
+#peso = carga[1]
+#comprimento = carga[2]
+#largura = carga[4]
+#altura = carga[3]
+#eixos = carga[5]
+#tipo = carga[6]
+#data = dataHora
 
 
 def suaCarga(carga):
@@ -133,7 +148,7 @@ def suaCarga(carga):
     #eixos = int(input("quantos eixos?"))
 #elif escolha ==6:
     #tipo = str(input("qual o novo tipo?"))
-carg = cadastra.suaCarga(peso=peso,comprimento=comprimento,largura=largura,altura=altura,eixos=eixos,placa=placa,tipo=tipo,data=dataHora)
+#carg = cadastra.suaCarga(peso=peso,comprimento=comprimento,largura=largura,altura=altura,eixos=eixos,placa=placa,tipo=tipo,data=dataHora)
 #update(carg,placa)
 
 def delete(placa):

@@ -47,7 +47,7 @@ def find_all():
 #print(find_all())
 
 
-def find_one_by_id(id):
+def find_one_by_codigo(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
             with con.cursor() as cur:
@@ -63,8 +63,24 @@ def find_one_by_id(id):
     except Exception as error:
         print("Ocorreu um erro na consulta ao seu cadastro")
         raise error
+def find_one_by_id(id):
+    try:
+        with oracledb.connect(user=user, password=password, dsn=dsn) as con:
+            with con.cursor() as cur:
+                sql = 'SELECT * FROM t_porto_cliente WHERE id_cliente = :id'
+                cur.execute(sql, { 'id': id })
+                resp = cur.fetchall()
 
-#print(find_one_by_id(34))
+                if len(resp) == 0:
+                    return None
+                else:
+                    return resp[0]
+            
+    except Exception as error:
+        print("Ocorreu um erro na consulta ao seu cadastro")
+        raise error
+
+print(find_one_by_id(4))
 
 
 def update(cliente, id):

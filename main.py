@@ -29,7 +29,7 @@ while escolha != 7 or opcao == "inicio":
         cliente_resource.create(cli) # adicionará os dados do cliente no banco de dados
         print("=-"*10)
         print("Agora preencha as informações do seu primeiro veiculo: ")
-        idcliente = cliente_resource.find_one_by_id(id=id)
+        idcliente = cliente_resource.find_one_by_codigo(id=id)
         idcliente=idcliente[0]
         
         veiculo = cadastra.cadastraV(id=idcliente,data=dataHora)
@@ -50,10 +50,10 @@ while escolha != 7 or opcao == "inicio":
         while opcao == "checar":
             listadados =cliente_resource.find_all()
             print(listadados)
-            id = input("seu ID de cadastro: ")
+            id = input("seu codigo de cadastro: ")
                                             
             print("=-"*10)
-            idcliente = cliente_resource.find_one_by_id(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
+            idcliente = cliente_resource.find_one_by_codigo(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
             if idcliente == None: # o cliente poderá decidir se quer voltar para o inicio ou tentar repetir a operação de inserir seu codigo
                 print('esse codigo não consta em nosso banco de dados')
                 print('gostaria de tentar mais uma vez?')
@@ -85,9 +85,9 @@ while escolha != 7 or opcao == "inicio":
         while opcao == "altera": #valor qualquer para entrar no looping while
             listadados =cliente_resource.find_all()
             print(listadados)
-            id = str(input("seu ID de cadastro: ")) 
+            id = str(input("seu codigo de cadastro: ")) 
             print("=-"*10)
-            idcliente = cliente_resource.find_one_by_id(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
+            idcliente = cliente_resource.find_one_by_codigo(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
             if idcliente == None: # o cliente poderá decidir se quer voltar para o inicio ou tentar repetir a operação de inserir seu codigo
                 print('esse codigo não consta em nosso banco de dados')
                 print('gostaria de tentar mais uma vez?')
@@ -160,8 +160,9 @@ while escolha != 7 or opcao == "inicio":
     elif escolha == 4: #consulta referente a opção "gostaria de consultar meus dados" da função "menu" em "menu.py" 
         opcao = 'consulta'
         while opcao =='consulta':
+              
               id = str(input("por favor digite seu codigo de usuario"))
-              tuplacliente = cliente_resource.find_one_by_id(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
+              tuplacliente = cliente_resource.find_one_by_codigo(id=id)# realizará uma busca pelo id apenas se o id estiver na lista "listaIdCliente"
               if tuplacliente == None: # o cliente poderá decidir se quer voltar para o inicio ou tentar repetir a operação de inserir seu codigo
                  print('esse codigo não consta em nosso banco de dados')
                  print('gostaria de tentar mais uma vez?')
@@ -188,26 +189,44 @@ while escolha != 7 or opcao == "inicio":
                    print("[2] não")
                    opcao = int(input())
         if opcao == 1:
-             placa = str(input("for favor nos informe a placa desse veiculo: "))
-             veiculo_consulta=veiculo_resource.find_one_by_placa(placa=placa)
-             print("suas informções de cadastro são:")
-             print('id_veiculo:', veiculo_consulta[0])
-             print('id_cliente:', veiculo_consulta[1])
-             print('peso:', veiculo_consulta[2])
-             print('comprimento:', veiculo_consulta[3])
-             print('largura:', veiculo_consulta[4])
-             print('altura:', veiculo_consulta[5])
-             print('eixos:', veiculo_consulta[6])
-             print('placa:', veiculo_consulta[7])
-             print('marca:', veiculo_consulta[8])
-             print('data de cadastro do veiculo:', veiculo_consulta[9])
-##############################################################################################################################################################################################
-        elif opcao == 2:     
+             opcao = 'consultaVeiculo'
+             while opcao == 'consultaVeiculo':
+                placa = str(input("for favor nos informe a placa desse veiculo: "))
+                veiculo_consulta=veiculo_resource.find_one_by_placa(placa=placa)
+                if veiculo_consulta == None:
+                    print("-="*10)
+                    print("veiculo não  encontrado gostaria de realizar essa consulta novamente? ")
+                    print("[1] Sim")
+                    print("[2] Não")
+                    opcao = int(input())
+                    if opcao == 2:
+                         print("você será enviado para o menu inicial")
+                         opcao='inicio'
+                    elif opcao ==1:
+                       opcao = 'consultaVeiculo'
+                else:
+
+                    print("suas informções de cadastro são:")
+                    print('id_veiculo:', veiculo_consulta[0])
+                    print('id_cliente:', veiculo_consulta[1])
+                    print('peso:', veiculo_consulta[2])
+                    print('comprimento:', veiculo_consulta[3])
+                    print('largura:', veiculo_consulta[4])
+                    print('altura:', veiculo_consulta[5])
+                    print('eixos:', veiculo_consulta[6])
+                    print('placa:', veiculo_consulta[7])
+                    print('marca:', veiculo_consulta[8])
+                    print('data de cadastro do veiculo:', veiculo_consulta[9])
+                    
+                    opcao = 2
+
+
+        if opcao == 2:     
              opcao == "inicio"
              print("gostaria de ver o resumo de suas chamadas?" )
              print("[1] Sim")
              print("[2] Não")        
-        opcao = int(input())
+             opcao = int(input())
         if opcao == 2:
              input("aperte [enter] para ser enviado para o meu incial")
              opcao = 'inicio'
@@ -216,7 +235,7 @@ while escolha != 7 or opcao == "inicio":
              opcao = "chamadas" # valor generico para entra no looping while
              while opcao == "chamadas": 
                     idChamada = str(input("por favor informe o codico da chamada que gostaria de verificar: "))
-                    chamadasTupla = chamada_resource.find_one_by_codigo(idChamada)
+                    chamadasTupla = chamada_resource.find_one_by_codigo(chamada=idChamada)
                     
                     if chamadasTupla == None:
                          print("o id dessa chamada não foi encontrado") 
@@ -231,10 +250,14 @@ while escolha != 7 or opcao == "inicio":
                               opcao = "inicio"
                          
                     else:
-                         auxilio.dbResumoChamada(chamadasTupla)        
+                         print("=-"*10)
+                         auxilio.dbResumoChamada(chamadasTupla) 
+                         print("-="*10)
+                         opcao = str(input("aperte [enter] para ser enviado para o menu inicial"))
+                         opcao = 'sair'       
                            
                       
- ############################################################################################################################################################################                                          
+                                           
                     
                     
     elif escolha == 5:
@@ -245,7 +268,7 @@ while escolha != 7 or opcao == "inicio":
         id = str(input("seu ID de cadastro: "))
         while escolha == 'procura': # assim que o usuario colocar seu id corretamente
             
-            tuplacliente=cliente_resource.find_one_by_id(id=id) 
+            tuplacliente=cliente_resource.find_one_by_codigo(id=id) 
             if tuplacliente == None: # o cliente poderá decidir se quer voltar para o inicio ou tentar repetir a operação de inserir seu codigo
                 print('esse codigo não consta em nosso banco de dados')
                 print('gostaria de tentar mais uma vez?')
@@ -315,13 +338,15 @@ while escolha != 7 or opcao == "inicio":
             while cadastraCarga == "iniciar":
                 
                 print("=-"*10)
-                dicCarga = cadastra.carga(placa=cdPlaca,data=dataHora)
+                codigoCarga = codigo.ids()
+                dicCarga = cadastra.carga(placa=cdPlaca,data=dataHora,codigo=codigoCarga)
+                print("=-"*10)
                 print("verifique se as informações estão corretas: " )
                 print(dicCarga)
-                for k, v in dicCarga: # o apresentado em forma de coluna, sendo as chaves são numeros de 1 a 6, menu de opções é automaticamente criado
+                for k, v in dicCarga.items(): # o apresentado em forma de coluna, sendo as chaves são numeros de 1 a 6, menu de opções é automaticamente criado
                     print(f'{k}={v}')
                 print("=-"*10)
-                print("suas imformações estão corretas")
+                print("suas imformações estão corretas?")
                 print("[1] Sim ")
                 print("[2] Não ")
                 opcao = int(input())
@@ -332,7 +357,8 @@ while escolha != 7 or opcao == "inicio":
                      carga_resource.create(dicCarga)
                      cadastraCarga = "sair"
                      print("=-"*10)
-                     tuplacarga = carga_resource.find_one_by_id(placa=cdPlaca)
+
+                     tuplacarga = carga_resource.find_one_by_codigo(codigo=codigoCarga)
                      cdCargaPlaca = tuplacarga[0]
                      nrPesoCarga = tuplacarga[1]
                      nrComprimentoCarga = tuplacarga[2]
@@ -342,6 +368,7 @@ while escolha != 7 or opcao == "inicio":
                      dsTipoCarga = tuplacarga[6]
                      dtCadastroCarga = tuplacarga[7]
                      idCarga = tuplacarga[8]
+                     cdCarga = tuplacarga[9]
 
            
             veiculoTotal = auxilio.veiculoTotal(pesoV=nrPeso,
@@ -352,7 +379,8 @@ while escolha != 7 or opcao == "inicio":
                                                 alturaC=nrAlturaCarga,
                                                 larguraV=nrLargura,
                                                 larguraC=nrAlturaCarga)
-            opcao = "modal" # pesoV e comprimentoC serão somados com o pesoV e comprimentoV e devolvidos como pesoTotal e comprimentoTotal
+            opcao = 'passaV'
+             # pesoV e comprimentoC serão somados com o pesoV e comprimentoV e devolvidos como pesoTotal e comprimentoTotal
                             # a maior altura e largura dentre veiculo e carga serão a alturaTotal e larguraTotal
             print("vt1",veiculoTotal)
         elif opcao == 2:# Caso o veiculo não tenha carga externa o pesoC, alturaC, comprimentoC e larguraC serão todos iguais a 0
@@ -364,45 +392,48 @@ while escolha != 7 or opcao == "inicio":
                                                     alturaC=0,
                                                     larguraV=nrLargura,
                                                     larguraC=0)
+                idCarga=None
+                opcao = 'passaV'
                 print("vt2",veiculoTotal) # os atributos de veiculoTotal serão guadados em pesoTotal, ComprimentoTotal, larguraTotal e alturatotal
-        pesoTotal = veiculoTotal['pesoTotal']
-        print(pesoTotal)
-        comprimentoTotal = veiculoTotal['comprimentoTotal']
-        print(comprimentoTotal)
-        alturaTotal = veiculoTotal['alturaTotal']
-        print(alturaTotal)
-        larguraTotal = veiculoTotal['larguraTotal']
-        print(larguraTotal)
-        dic_auxilio = auxilio.auxilio() # o dicionario "auxilio" será chamado da função "auxilio"  em auxilio.py e quardado em dic_auxilio 
-        dic_modal = dic_auxilio['modal'] # o dicionario da chave modal no dicionario dic_auxilio será quardado em dic_modal
-        modalT = auxilio.escolhaModal(pesoTotal=pesoTotal,dic_modal=dic_modal) # o valor de pesoTotal será usado para escolher o modal correto no dicionario dic_modal
-        if modalT == 'Modal leve':
-            tuplaAuxilio = auxilio_resource.find_all_auxilio()
-            modalT = tuplaAuxilio[2]
+        if opcao == 'passaV':
+            pesoTotal = veiculoTotal['pesoTotal']
+            print(pesoTotal)
+            comprimentoTotal = veiculoTotal['comprimentoTotal']
+            print(comprimentoTotal)
+            alturaTotal = veiculoTotal['alturaTotal']
+            print(alturaTotal)
+            larguraTotal = veiculoTotal['larguraTotal']
+            print(larguraTotal)
+            dic_auxilio = auxilio.auxilio() # o dicionario "auxilio" será chamado da função "auxilio"  em auxilio.py e quardado em dic_auxilio 
+            dic_modal = dic_auxilio['modal'] # o dicionario da chave modal no dicionario dic_auxilio será quardado em dic_modal
+            modalT = auxilio.escolhaModal(pesoTotal=pesoTotal,dic_modal=dic_modal) # o valor de pesoTotal será usado para escolher o modal correto no dicionario dic_modal
+            if modalT == 'Modal leve':
+                tuplaAuxilio = auxilio_resource.find_all_auxilio()
+                modalT = tuplaAuxilio[2]
             
-        elif modalT == 'Modal medio':
-             tuplaAuxilio = auxilio_resource.find_all_auxilio()
-             modalT = tuplaAuxilio[3]
-        elif modalT == 'Modal pesado':  
-             tuplaAuxilio = auxilio_resource.find_all_auxilio() 
-             modalT = tuplaAuxilio[4]  
+            elif modalT == 'Modal medio':
+                tuplaAuxilio = auxilio_resource.find_all_auxilio()
+                modalT = tuplaAuxilio[3]
+            elif modalT == 'Modal pesado':  
+                tuplaAuxilio = auxilio_resource.find_all_auxilio() 
+                modalT = tuplaAuxilio[4]  
          
-        print(modalT)
+            print(modalT)
         
-        print("=-"*10)
-        print("por favor digite o numero correspondente ao seu problema")
-        problemas = auxilio_resource.find_all_problemas() # a tupla referente a a tabela do banco dados "T_PORTO_PROBLEMA"
-        for i in range(len(problemas)): # o apresentado em forma de coluna, sendo as chaves são numeros de 1 a 6, menu de opções é automaticamente criado
-            print("[" + str(problemas[i][0]) + "] " + str(problemas[i][1]))
+            print("=-"*10)
+            print("por favor digite o numero correspondente ao seu problema")
+            problemas = auxilio_resource.find_all_problemas() # a tupla referente a a tabela do banco dados "T_PORTO_PROBLEMA"
+            for i in range(len(problemas)): # o apresentado em forma de coluna, sendo as chaves são numeros de 1 a 6, menu de opções é automaticamente criado
+                print("[" + str(problemas[i][0]) + "] " + str(problemas[i][1]))
         
         
-        opcao = int(input())
-        problema = opcao
-        print(problema)
+            opcao = int(input())
+            problema = opcao
+            print(problema)
         
-        print("=-"*10)
+            print("=-"*10)
                         
-        especificacao = auxilio.expecificacao() # o dicionario de expecificações será chamado da função "expecificacao" em auxilio.py 
+            especificacao = auxilio.expecificacao() # o dicionario de expecificações será chamado da função "expecificacao" em auxilio.py 
         
         if opcao == 1: # referente a opção ' O veiculo simplesmente parou no meio da estrada e não anda mais', do dicionario "problema"
                 gasolina_dic = especificacao[str(opcao)]
@@ -416,9 +447,9 @@ while escolha != 7 or opcao == "inicio":
                 
                 if opcao == 1: #referente a opção ' há gasolina no tanque' do dicionaro "gasolina" na funcao especificacao
                     dbEspecificacao = 1
-                    solucao = modalT #quarda valor modal em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
-                    print("entamos enviando um modal", modalT, "para a sua localização" )
-                                        
+                    solucao = modalT[0] #quarda valor modal em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
+                    print("entamos enviando um modal", modalT[1], "para a sua localização" )
+                    opcao='chamada'                    
                     
                 elif opcao == 2: #referente a opção ' o tanque esta vazio' do dicionaro "gasolina" na funcao especificacao
                     dbEspecificacao = 2
@@ -427,6 +458,7 @@ while escolha != 7 or opcao == "inicio":
                     
                     print("estamos enviando um", moto, "com gasolina para a sua localização")
                     solucao=1
+                    opcao='chamada'
         elif opcao == 2: # referente a opção ' O veiculo estava estacionado e não quer ligar', do dicionario "problema"
                 eletrico = especificacao['2'] 
                 print("o painel esta ascendendo?")
@@ -437,8 +469,9 @@ while escolha != 7 or opcao == "inicio":
                 print(especificacao)    
                 if opcao == 1: #referente a opção ' O painel esta ligando' do dicionaro "esletrico" na funcao especificacao
                     dbEspecificacao = 3
-                    solucao = modalT #quarda valor modal em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
-                    print("entamos enviando um modal", modalT, "para a sua localização" )
+                    solucao = modalT[0] #quarda valor modal em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
+                    print("entamos enviando um modal", modalT[1], "para a sua localização" )
+                    opcao='chamada'
                 elif opcao == 2: #referente a opção ' O painel não liga' do dicionaro "esletrico" na funcao especificacao
                     
                      moto = dic_auxilio['moto']
@@ -446,22 +479,23 @@ while escolha != 7 or opcao == "inicio":
                      solucao = moto #quarda valor moto em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
                      print("estamos enviando um", moto, "com material carregar sua bateria, para a sua localização")
                      solucao =1
+                     opcao='chamada'
         elif opcao == 3:# referente a opção ' Meu pneu furou/extourou, não tenho step/macaco', do dicionario "problema"
                 pneu = especificacao['3']
                 especificacao = pneu
-                print(especificacao)
+                
                 tecnico = dic_auxilio['tecnico']
                 solucao = tecnico #quarda valor tecnico em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
                 print("estamos enviando um", tecnico, "com step para a sua localização")
                 dbEspecificacao = None
                 solucao=2
-
+                opcao='chamada'
         elif opcao == 4:# referente a opção ' Ouvi um barulho e agora meu veiculo esta se comportando de maneira estranha', do dicionario "problema"
                 print("Consegue identificar de onde esta vindo o barulho? ")
                 barulho = especificacao['4']
                 for k, v in barulho.items():
                     print(f'{k}={v}')
-                opcao = str(input()) # como barulho estranho é um problema de dificio averiguação colocamos modal como unica opção de solução
+                opcao = int(input()) # como barulho estranho é um problema de dificio averiguação colocamos modal como unica opção de solução
                 if opcao == 1:
                      dbEspecificacao = 7
                 elif opcao ==2:
@@ -476,59 +510,65 @@ while escolha != 7 or opcao == "inicio":
                      dbEspecificacao = 12
                 
                 especificacao = barulho[str(opcao)]
-                solucao = modalT #quarda valor modal em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
-                print("entamos enviando um modal", modalT, "para a sua localização" )
+                solucao = modalT[0] #quarda valor modal em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
+                print("entamos enviando um modal", modalT[1], "para a sua localização" )
+                opcao='chamada'
         elif opcao == 5:# referente a opção ' Um cheiro estranho', do dicionario "problema"
                 print("que tipo de cheiro esta sentindo?")
                 cheiro = especificacao['5']
                 for k, v in cheiro.items():
                     print(f'{k}={v}')
-                opcao = str(input()) # # como cheiro de queimado ou gasolina podem estar ambos ligados a um problem serio colocamos modal como unica opção de solução   
+                opcao = int(input()) # # como cheiro de queimado ou gasolina podem estar ambos ligados a um problem serio colocamos modal como unica opção de solução   
                 especificacao = cheiro[str(opcao)]
+                print(especificacao)
                 if opcao == 1:
                      dbEspecificacao = 5
+                     opcao='chamada'
                 elif opcao ==2:
                      dbEspecificacao = 6
-                solucao = modalT #quarda valor modal em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
+                solucao = modalT[0] #quarda valor modal em solucao para ser adicionado no dicionario da fuunção "resumoChamadas" em auxilio.py
                 print("por precausão, é melhor estacionar o carro")
-                print("entamos enviando um modal", modalT, "para a sua localização" )
-                print("por precausão, é melhor estacionar o carro")
+                print("entamos enviando um ", modalT[1], "para a sua localização" )
                 
+                opcao='chamada'
         elif opcao == 6:# referente a opção ' Vejo fumaça saindo do meu veiculo', do dicionario "problema"
                 fumaça = especificacao['6']
                 especificacao = fumaça 
-                solucao = modalT #quarda valor modal em solucao para ser adicionado no dicionario da função "resumoChamadas" em auxilio.py
+                solucao = modalT[0] #quarda valor modal em solucao para ser adicionado no dicionario da função "resumoChamadas" em auxilio.py
                 print("por precausão, é melhor estacionar o carro") #como a visão de fumaça pode ser um problema seriu no veiculo colocamos o modal como 
                                                                     #solução para esse caso
-                print("entamos enviando um modal", modalT, "para a sua localização" )
+                print("entamos enviando um modal", modalT[1], "para a sua localização" )
                 dbEspecificacao = None
-        codigoChamada =codigo.ids()
-        chamada = auxilio.resumoChamada(idProblema=problema, idAuxilio=solucao,
+                opcao='chamada'
+        if opcao == 'chamada':
+            codigoChamada =codigo.ids()
+            chamada = auxilio.resumoChamada(idProblema=problema, idAuxilio=solucao,
                                         idCliente=idCliente, idCarga=idCarga,
                                         idEspecificacao=dbEspecificacao,
-                                        idVeiculo=1, data=dataHora, idCodigo=codigoChamada)
-        chamada_resource.create(chamada=chamada)
-        print("=-"*10) #todsas os valores pertinentes a chamada serão adicionados a função resomuChamad em aucilio.py e serão guardadas no valor variavel resumoChamada
-        print('por favor anote o id dessa chamada')
-        print("seu codigo é:" + str(codigoChamada)) # mostrará o id da chamada para o usuario
-        print("=-"*10)
-        print("gostaria de ver o resumo de sua chamada?")
-        print("[1] Sim")
-        print("[2] Não")
-        opcao = int(input())
-        if opcao == 1: # mostra dicionario do resumo da chamada em forma de colunas
-            tuplaChamada =chamada_resource.find_one_by_id(chamada=codigoChamada)
+                                        idVeiculo=idVeiculo, data=dataHora, idCodigo=codigoChamada)
+            print(chamada)
+            chamada_resource.create(chamada=chamada)
+            print("=-"*10) #todsas os valores pertinentes a chamada serão adicionados a função resomuChamad em aucilio.py e serão guardadas no valor variavel resumoChamada
+            print('por favor anote o id dessa chamada')
+            print("seu codigo é:" + str(codigoChamada)) # mostrará o id da chamada para o usuario
+            print("=-"*10)
+            print("gostaria de ver o resumo de sua chamada?")
+            print("[1] Sim")
+            print("[2] Não")
+            opcao = int(input())
+            if opcao == 1: # mostra dicionario do resumo da chamada em forma de colunas
+                tuplaChamada =chamada_resource.find_one_by_codigo(chamada=codigoChamada)
             
-            auxilio.dbResumoChamada(tuplaChamada)
+                auxilio.dbResumoChamada(tuplaChamada)
             
                     
 
-            input("aperte [Enter] para ser eviado para o inicio")
-            print("-="*10)
-            opcao = "inicio"       
-        elif opcao == 2:# leva o usuario para o inicio do programa
-            input("aperte enter para ser enviado para o inicio")          
-            opcao ="inicio"
+                input("aperte [Enter] para ser eviado para o inicio")
+                print("-="*10)
+                opcao = "inicio"       
+            elif opcao == 2:# leva o usuario para o inicio do programa
+                input("aperte enter para ser enviado para o inicio")          
+                opcao ="inicio"
     elif escolha == 6: # apaga referente a opção "gostaria de deletar minhas informações" da função "menu" em menu.py
         print("Oque gostaria de deletar?")
         print("[1] Minha Conta")
@@ -537,9 +577,9 @@ while escolha != 7 or opcao == "inicio":
         if opcao == 1:
             opcao = 'deletar'
             while opcao == 'deletar':
-                idCliente = str(input('Por favor informe seu id de cadastro: ')) 
-                cliente=cliente_resource.find_one_by_id(id=idCliente)
-                print(cliente)
+                idCliente = str(input('Por favor informe seu codigo de cadastro: ')) 
+                cliente=cliente_resource.find_one_by_codigo(id=idCliente)
+                
                 if cliente == None:
                     print("seu codigo não foi encontrado gostaria de tentar de novo?")
                     print("[1] sim")
@@ -551,8 +591,8 @@ while escolha != 7 or opcao == "inicio":
                          opcao = "inicio"
                 else:
                     cliente_resource.delete(id=idCliente)
-                    print("aperte [enter] para ser enviado para o menu inicial")
                     opcao = input ("seu cadastro foi apagado com sucesso")
+                    print("aperte [enter] para ser enviado para o menu inicial")
                     opcao = "inicio"
                     print("=-"*10)
         elif opcao == 2:

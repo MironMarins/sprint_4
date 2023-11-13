@@ -1,5 +1,9 @@
 import codigo
-
+import ressources.cliente_resource as cliente_resource
+import ressources.veiculo_resource as veiculo_resource
+import ressources.carga_resource as carga_resource
+import ressources.auxilio_resourse as auxilio_resource
+import ressources.chamada_resource as chamada_resource
 
 def auxilio():
         ajuda = {}
@@ -112,22 +116,38 @@ def dbResumoChamada(tuplaChamada):
                 print(tuplaChamada)
                 idchamada = tuplaChamada[0]
                 print("o id dessa chamada", idchamada)
-                clienteTupla = cliente_resource.find_one_by_id(tuplaChamada[2])
-                print("seus dados de cliente ", clienteTupla )
-                veiculoTupla = veiculo_resource.find_one_by_idVeiculo(tuplaChamada[4])
-                print("dados de seu veiculos ", veiculoTupla)
-                idCarga = carga_resource.find_one_by_id(tuplaChamada[6])
-                print("a carga que seu veiculo esta comportando ")
-                problemaTupla = auxilio_resource.find_one_by_id_problema(tuplaChamada[1])
-                print("seu problema ", problemaTupla)
-                especificacaoTupla = auxilio_resource.find_one_by_id_especificacao(tuplaChamada[5])
-                print("as especificação de seu problema  ", especificacaoTupla)
-                auxilioTupla = auxilio_resource.find_one_by_id_auxilio(tuplaChamada[3])
-                print("nossa solução para seu porblema ", auxilioTupla)
                 dtChamada = tuplaChamada[7]
-                print("a data de sua chamada ", dtChamada)
+                print("=-"*10)
+                print("Na data de ", dtChamada)
+                clienteTupla = cliente_resource.find_one_by_id(tuplaChamada[2])
+                print("O cliente " + str(clienteTupla[1]))
+                print("portador do cpf "+ str(clienteTupla[2]))
+                veiculoTupla = veiculo_resource.find_one_by_idVeiculo(tuplaChamada[4])
+                auxilioTupla = auxilio_resource.find_one_by_id_auxilio(tuplaChamada[3])
+                print("solicitou um " + str(auxilioTupla[1]))
+                print("para seu veiculo "+ str(veiculoTupla[8]) + " de placa "+ str(veiculoTupla[7]))
+                print("com " + str(veiculoTupla[2]) + " toneladas, " + str(veiculoTupla[3]) +" de comprimento" )
+                print(str(veiculoTupla[5]) + " de altura e " + str(veiculoTupla[4]) +" de largura" )
+                idCarga = carga_resource.find_one_by_id(tuplaChamada[6])
+                if idCarga ==None:
+                      print("não portando carga")
+                else:
+                      print("portando uma carga do tipo" + str(idCarga[6]))
+                      print("com " + str(idCarga[1]) + " toneladas, " + str(idCarga[2]) +" de comprimento" )
+                      print(str(idCarga[3]) + " de altura e " + str(idCarga[4]) +" de largura" )
+                
+                problemaTupla = auxilio_resource.find_one_by_id_problema(tuplaChamada[1])
+                
+                print("sobre o problema: " + problemaTupla[1])
+                especificacaoTupla = auxilio_resource.find_one_by_id_especificacao(tuplaChamada[5])
+                if especificacaoTupla==None:
+                      especificacaoTupla = 'desnecessaria'
+                else:
+                    print("especificamente: "+ str(especificacaoTupla[1]))
+                
+                
                 cdChamada = tuplaChamada[8]
-                print("o codigo dessa chamda", cdChamada)
+                print("o codigo dessa chamada:", cdChamada)
 
     
 

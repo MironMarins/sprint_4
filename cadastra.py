@@ -74,7 +74,7 @@ def seuCadastro(id,nome,cpf,data):
     cli['data'] = data
     return cli
 
-def carga(placa,data):
+def carga(placa,data,codigo):
       
     Carga = {} 
     
@@ -99,10 +99,10 @@ def carga(placa,data):
     Carga['CargaTipo'] = aux
     
     Carga['data'] = data
-       
+    Carga['codigo'] = codigo   
     return Carga
 
-def suaCarga(placa,peso,comprimento,largura,altura,eixos,tipo,data):
+def suaCarga(placa,peso,comprimento,largura,altura,eixos,tipo,data,codigo):
     V = {}
     V['placa'] = placa
     V['peso'] = peso
@@ -112,6 +112,7 @@ def suaCarga(placa,peso,comprimento,largura,altura,eixos,tipo,data):
     V['eixos'] = eixos
     V['CargaTipo'] = tipo
     V['data'] = data
+    V['codigo'] = codigo
     return V
 
 
