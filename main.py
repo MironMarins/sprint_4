@@ -1,7 +1,6 @@
 import datetime as dt
 import menu
 import cadastra
-import altera
 import auxilio
 import codigo
 import ressources.cliente_resource as cliente_resource

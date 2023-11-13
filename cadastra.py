@@ -31,19 +31,7 @@ def cadastraV(id,data):
     V['data'] = data
 
     return V
-def seuVeiculo(idveiculo,id,placa,marca,peso,comprimento,largura,altura,eixos,data):
-    V = {}
-    V['idveiculo'] = idveiculo
-    V['id'] = id
-    V['placa'] = placa
-    V['marca'] = marca
-    V['peso'] = peso
-    V['comprimento'] = comprimento
-    V['largura'] = largura
-    V['altura'] = altura
-    V['eixos'] = eixos
-    V['data'] = data
-    return V
+
 
 
 def cadastraCliente(data,id):
@@ -59,20 +47,9 @@ def cadastraCliente(data,id):
 
     cliente['data'] = data
 
-    
-    #veiculos.append(cadastraV())
-    #cliente['veiculos'] = veiculos
-    #idCliente = cliente['id']
-    #listaIdCliente.append(idCliente)
     return cliente
 
-def seuCadastro(id,nome,cpf,data):
-    cli = {}
-    cli['CodigoCliente'] = id
-    cli['nome'] = nome
-    cli['cpf'] = cpf
-    cli['data'] = data
-    return cli
+
 
 def carga(placa,data,codigo):
       
@@ -102,18 +79,7 @@ def carga(placa,data,codigo):
     Carga['codigo'] = codigo   
     return Carga
 
-def suaCarga(placa,peso,comprimento,largura,altura,eixos,tipo,data,codigo):
-    V = {}
-    V['placa'] = placa
-    V['peso'] = peso
-    V['comprimento'] = comprimento
-    V['altura'] = altura
-    V['largura'] = largura
-    V['eixos'] = eixos
-    V['CargaTipo'] = tipo
-    V['data'] = data
-    V['codigo'] = codigo
-    return V
+
 
 
 

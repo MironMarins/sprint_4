@@ -1,15 +1,13 @@
-#import cadastra
+
 import oracledb
 import datetime as dt
-#import codigo
+
 user='rm551801'
 password='040591'
 dsn='oracle.fiap.com.br/orcl'
 hoje = dt.datetime.now()
 dataHora = hoje.strftime('%d/%m/%Y %H:%M')
-#print(dataHora)
 
-#cli = cadastra.cadastraCliente(str(dataHora),codigo.ids())
 
 
 def create(cliente):
@@ -29,7 +27,7 @@ def create(cliente):
         print("Ocorreu um erro ao realizar seu cadastro.")
         raise error
 
-#create(cli)
+
 
 
 def find_all():
@@ -44,7 +42,7 @@ def find_all():
         print("Ocorreu um erro na consulta ao seu cadastro")
         raise error
 
-#print(find_all())
+
 
 
 def find_one_by_codigo(id):
@@ -97,25 +95,7 @@ def update(cliente, id):
         print("Ocorreu um erro ao atualizar seu cadastro.")
         raise erro
 
-#iden = int(input("qual id quer alterar?"))
 
-#cliente = find_one_by_id('1235')
-#print(cliente)
-#nome = cliente[1]
-#cpf = cliente[2]
-#data= cliente[3]
-#print()
-#print("[1] nome: ",nome)
-#print("[2] cpf: ", cpf)
-
-#escolha = int(input("qual informação quer alterar"))
-#if escolha ==1:
-    #nome = str(input("qual o novo nome?"))
-#else:
-    #cpf = int(input("qual o novo nome?"))
-#cli = cadastra.seuCadastro(id='1235',nome=nome,cpf=cpf,data=data)
-#print(cli)
-#update(cli,'1235')
 
 def delete(id):
     try:
@@ -132,5 +112,5 @@ def delete(id):
         print("Ocorreu um erro ao deletar seu cadastro.")
         raise erro
 
-#delete('1235')
+
 

@@ -1,14 +1,13 @@
 import datetime as dt
 import oracledb
-import cadastra
+
 user='rm551801'
 password='040591'
 dsn='oracle.fiap.com.br/orcl'
 
 hoje = dt.datetime.now()
 dataHora = hoje.strftime('%d/%m/%Y %H:%M')
-#print(dataHora)
-#vei = cadastra.carga(placa='4678',data=dataHora)
+
 
 
 def create(carga):
@@ -61,7 +60,7 @@ def find_one_by_placa(placa):
         print("Ocorreu um erro ao consultar sua carga")
         raise error
 
-#print(find_one_by_id('1234-rm'))
+
 def find_one_by_id(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -110,16 +109,7 @@ def update(carga, placa):
         print("Ocorreu um erro ao atualizar sua carga.")
         raise erro
 
-#placa = str(input("digite o a placa do veiculo que cujas informação deseja alterar?"))
-#placa = '1234-rm'
-#carga = find_one_by_id('1234-rm')
-#peso = carga[1]
-#comprimento = carga[2]
-#largura = carga[4]
-#altura = carga[3]
-#eixos = carga[5]
-#tipo = carga[6]
-#data = dataHora
+
 
 
 def suaCarga(carga):
@@ -133,23 +123,7 @@ def suaCarga(carga):
     
     
 
-#print(suaCarga(carga))
 
-#escolha = int(input("qual informação quer alterar"))
-#if escolha ==1:
-    #peso = float(input("qual o novo peos?"))
-#elif escolha ==2:
-    #comprimento = float(input("qual o novo comprimento?"))
-#elif escolha ==4:
-    #largura = float(input("qual a nova largura?"))
-#elif escolha ==3:
-    #altura = float(input("qual a nova altura?"))
-#elif escolha ==5:
-    #eixos = int(input("quantos eixos?"))
-#elif escolha ==6:
-    #tipo = str(input("qual o novo tipo?"))
-#carg = cadastra.suaCarga(peso=peso,comprimento=comprimento,largura=largura,altura=altura,eixos=eixos,placa=placa,tipo=tipo,data=dataHora)
-#update(carg,placa)
 
 def delete(placa):
     try:
@@ -166,5 +140,5 @@ def delete(placa):
         print("Ocorreu um erro ao deletar sua carga.")
         raise erro
 
-#delete(placa)
+
 

@@ -18,9 +18,7 @@ def auxilio():
         ajuda['modal'] = reboque
         return ajuda
 
-#teste = auxilio()
-#dici = teste['tecnico']
-#print(dici)
+
 
 
 def problema():

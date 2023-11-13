@@ -1,14 +1,12 @@
 import datetime as dt
 import oracledb
-#import cadastra
-#import auxilio
-#import codigo
+
 user='rm551801'
 password='040591'
 dsn='oracle.fiap.com.br/orcl'
 hoje = dt.datetime.now()
 dataHora = hoje.strftime('%d/%m/%Y %H:%M')
-#cham = auxilio.resumoChamada(idProblema=1,idAuxilio=1,idCliente=1,idCarga=1,idEspecificacao=1,idVeiculo=1,data=dataHora, idCodigo=codigo.ids())
+
 
 
 def create(chamada):
@@ -27,7 +25,6 @@ def create(chamada):
         print("Ocorreu um erro ao realizar sua chamada.")
         raise error
 
-#create(cham)
 
 
 
@@ -95,19 +92,7 @@ def update(veiculo, placa):
         print("Ocorreu um erro ao atualizar seu veiculo.")
         raise erro
 
-#placa = str(input("digite o a placa do veiculo que cujas informação deseja alterar?"))
 
-#veiculo = find_one_by_id('456-fsdf')
-#idveiculo = veiculo[0]
-#id = veiculo[1]
-#peso = veiculo[2]
-#comprimento = veiculo[3]
-#largura = veiculo[4]
-#altura = veiculo[5]
-#eixos = veiculo[6]
-#placa = veiculo[7]
-#marca = veiculo[8]
-#data = dataHora
 
 def seuVeiculo(veiculo):
     print("Qual informação gostaria de alterar? ")
@@ -119,25 +104,7 @@ def seuVeiculo(veiculo):
     print("[6] placa: ",veiculo[7])
     print("[7] marca: ",veiculo[8])
 
-#print(seuVeiculo(veiculo))
 
-#escolha = int(input("qual informação quer alterar"))
-#if escolha ==1:
-    #peso = float(input("qual o novo peos?"))
-#elif escolha ==2:
-    #comprimento = float(input("qual o novo comprimento?"))
-#elif escolha ==3:
-    #largura = float(input("qual a nova largura?"))
-#elif escolha ==4:
-    #altura = float(input("qual a nova altura?"))
-#elif escolha ==5:
-    #eixos = int(input("quantos eixos?"))
-#elif escolha ==6:
-    #placa = str(input("qual a nova plana?"))
-#elif escolha ==7:
-    #marca = str(input("qual o nova marca?"))
-#vei = cadastra.seuVeiculo(idveiculo=idveiculo,id=id,peso=peso,comprimento=peso,largura=largura,altura=altura,eixos=eixos,placa=placa,marca=marca)
-#update(vei,placa)
 
 def delete(placa):
     try:
