@@ -48,7 +48,7 @@ carga de veiculo
 
 Programa "auxilio.py"
 
-Conta com seis funções que auxiliaram na indetentifaicação de um problema durante uma chamada de modal e na escolha de uma ajuda
+Conta com sete funções que auxiliaram na indetentifaicação de um problema durante uma chamada de modal e na escolha de uma ajuda
 apropriada, alem de criar uma lista com o resumo dos dados dessa chamada.
 A função "auxilio", conta com o tipo de ajuda que será madanda para o cliente.
 A função "problema", conta com um dicionarios de atributos numerados, cujos valores são referentes a tipos de problemas genricos que o cliente
@@ -62,34 +62,32 @@ A função "escolhaModal", usara as informações de pesoTotal da função veicu
 de veiculo necessitado
 A função "resumoChamada", ela recebe as informações de problemas e de veiculo e as coloca no dicionerio resumoChamada, para em seguida
 a colocalo na lista "chamada"
-A lista "listaIdChamada" foi feita apenas para os ids chamadas sejão depositadas, para que se no caso de o usuario digitar um id inexiste
-ele recebeba a menssagem "esse codigo não consta em nosso banco de dados" 
+A função "dbResumoChamada" mostrará as informação pertinentes a chamada feita pela cliente utilizando dados de diversas tabelas de nosso
+banco de dados, e posicionando essas informações em forma de um texto que resume todas as informações
 
 programa "cadastra.py"
 
-Conta com duas listas e tres funções
-as listas "listaPlacas" e "listaIdCliente", seriram apenas para guardar essas informações unicas de modo que no 
-caso de o usuario digitar um id inexistente ou placa que não consta em seu cadastro recebeba a menssagem 
-"esse codigo não consta em nosso banco de dados"
-A função "cadastraCliente" pedirá informações ao usuario e as guardará no dicionario cliente, para que em seguida quarde essas informações
-dentro da lista usuraio em main.py.
-A função "cadastraV" pedirá informações sobre o veiculo do cliente para em seguida guarda-las no dicionario "V" que será em seguida
-guardado na lista "veiculos" que esta no atribulo "veiculos" do dicionario "cliente" da função "cadastraCliente"
+Conta quatro funções
+A função "cadastraCliente" pedirá informações ao usuario e criará um dicionario cujas impormações serão ultizadas para preencher uma
+linha na tabela "t_porto_cliente" de nosso banco de dados.
+A função "cadastraV" pedirá informações sobre o veiculo do cliente para em seguida criar um dicionario cujas impormações serão
+ultizadas para preencher uma linha na tabela tabela "t_porto_veiculo_cliente" de nosso banco de dados.
+A função "carga", permitira ao usuario inserir as informações da carga de seu veiculo(se ouver) em um dicioanario cujas impormações
+ serão ultizadas para preencher uma linha na tabela "t_porto_veiculo_carga" de nosso banco de dados. 
+A função "seuVeiculo" será ulizada para criar um dicionario que será especificamente utilizado fazer alterações nos dados de um
+veiculo em nosso banco de dados
 
 programa "main.py"
 
 O programa central do nosso projeto, para seu funcinamento importações serão feitas por todos os outros programas.
-Ele conta com a lista "cliente" que á qual o usurio podera colocar, alterar, ver ou deletar informações contanto que ele
-tenha as chaves nessecitadas pelo programa para faze-lo (ids e numero de placas)
+
 A varialvel "escolha" é referente as opçoes em "menu.py" enquanto a varialvel opcao será mais usada para navenar nos menus mais 
 adentro do programa. 
 
 É indicado que o usuario crie uma conta na opcao "1 - gostaria de realizar meu cadastro" antes de começar qualquer operação ou
+pois cada opção no menu principal será 
 poderá cair num looping que só será solucionado com a reinicilização do programa.
 
-Obs: para não colocar muitas linhas repetidas com o loopins while esse comando foi usado apenas nas quatro primeiras opções
-do menu principal, apenas para demonstrar uma solução para looping, estamos confiantes na habilidades de nossos usuarios de escreverem
-seus codigos de forma correta quando forem pedidos    
 
 Lembrando de SEMPRE GUARDAR O CÓDIGO DADO AO USOARIO AO FINAL DA REALIZAÇÃO DE SEU CADASTRO, ASSIM COMO A PLACA CADASTRADA DE SEU
 VEICULO e CODIGO DE CHAMADA AO FINAL DE UMA CHAMADA pois é com esses codigos que o usoario poderá usar as funcionalidades desse programa
