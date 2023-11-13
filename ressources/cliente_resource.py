@@ -83,7 +83,7 @@ def find_one_by_id(id):
         print("Ocorreu um erro na consulta ao seu cadastro")
         raise error
 
-print(find_one_by_id(4))
+
 
 #função responsavel por alterar informações na tabela t_porto_cliente
 #ela recebera o codigo correspondente a cd_cliente e um dicionario com novas informações 

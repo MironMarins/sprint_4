@@ -85,9 +85,8 @@ A varialvel "escolha" é referente as opçoes em "menu.py" enquanto a varialvel 
 adentro do programa. 
 
 É indicado que o usuario crie uma conta na opcao "1 - gostaria de realizar meu cadastro" antes de começar qualquer operação ou
-pois cada opção no menu principal será 
+pois cada opção no menu principal irá pedir por codigo de usuario valido ou uma placa de carro existente em nosso banco de dados
 poderá cair num looping que só será solucionado com a reinicilização do programa.
-
 
 Lembrando de SEMPRE GUARDAR O CÓDIGO DADO AO USOARIO AO FINAL DA REALIZAÇÃO DE SEU CADASTRO, ASSIM COMO A PLACA CADASTRADA DE SEU
 VEICULO e CODIGO DE CHAMADA AO FINAL DE UMA CHAMADA pois é com esses codigos que o usoario poderá usar as funcionalidades desse programa
@@ -95,6 +94,38 @@ VEICULO e CODIGO DE CHAMADA AO FINAL DE UMA CHAMADA pois é com esses codigos qu
 Vale resaltar que toda vez que um código for digitado de forma errada uma lista de opções aparecerá na tela
 e o usoario poderá tentar digitar o código denovo
 
+pasta "ressources"
+
+pasta contendo os programas que contem as funcões que permitiram a manipulação dos dados no banco de dados
+
+programa "cliente_resource.py"
+
+O programa conta os recurssos que permitiram a manipulação dos dados da tabela "t_porto_cliente".
+função "create": recebera um dicionario, e importará suas informações para a tabela "t_porto_cliente".
+função "find_all": ira gerar uma lista de tupla que conterá todas as informações da tabela "t_porto_cliente"
+função "find_one_by_codigo": irá receber um codigo numero providenciado pelo nosso programa e se ele estiver em nosso
+banco de dados, a função ira retornar um tupla correspondente a linha do BD em o codigo faz parte
+função "find_one_by_id": o id correspondente ao numero da colona "id_cliente" do BD e retornar um tupla 
+correspondente a linha da tabela em esse id faz parte
+função "update": deve rebeber um codigo que deve pertencer ao nosso BD e um dicionario com novas imformações que substituiram
+as anteriores da linha correspondente a linha em que o codigo se encontra.
+função "delete": irá receber um codigo existente em nossa tabela, e irá deletar as informações da linha em que esse codigo se 
+encontra 
+
+programa "veiculo_resource.py"
+O programa conta os recurssos que permitiram a manipulação dos dados da tabela "t_porto_cliente_veiculo".
+função "create": recebera um dicionario, e importará suas informações para a tabela "t_porto_cliente_veiculo".
+função "find_all": ira gerar uma lista de tupla que conterá todas as informações da tabela "t_porto_cliente_veiculo"
+função "find_one_by_placa": o codigo da placa do carro cadastrada pelo cliente e se ela estiver em nosso
+banco de dados, a função ira retornar um tupla correspondente a linha do BD em em que a placa
+função "find_one_by_idVeiculo": o id correspondente ao numero da colona "id_cliente_veiculo" do BD e retornar um tupla 
+correspondente a linha da tabela em esse id faz parte
+função "update": deve rebeber o codigo da placa de carro que deve pertencer ao nosso BD e um dicionario com novas 
+informações que substituiram as anteriores da linha correspondente a linha em que o codigo se encontra.
+função "delete": irá receber o codigo de placa de carro existente em nossa tabela, e irá deletar as informações da 
+linha em que essa placa se encontra.
+
+ 
 
 
 
