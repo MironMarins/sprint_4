@@ -1,3 +1,4 @@
+#mostrará o menu principal do programa
 def menu():
    
     print("1 - gostaria de realizar meu cadastro")
@@ -8,7 +9,8 @@ def menu():
     print("6 - gostaria de deletar minhas informações")
     print("7 - sair")
     return int(input('escolha: '))
-
+#mostrará o menu de escolha de informações de um veiculo cadastrado em nosso
+#banco de dados
 def seuVeiculo(veiculo):
     print("Qual informação gostaria de alterar? ")
     print("[1] peso: ",veiculo[2])

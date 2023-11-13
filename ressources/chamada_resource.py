@@ -8,7 +8,8 @@ hoje = dt.datetime.now()
 dataHora = hoje.strftime('%d/%m/%Y %H:%M')
 
 
-
+# função responçavel por receber um dicionario e usar essas informações para montar uma linha na tabela
+#  t_porto_chamada
 def create(chamada):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -26,7 +27,7 @@ def create(chamada):
         raise error
 
 
-
+#função que trará uma lista de tuplas referente a tabela t_porto_chamada
 
 def find_all():
     try:
@@ -40,7 +41,8 @@ def find_all():
         print("Ocorreu um erro ao consultar os livros")
         raise error
 
-
+#função que procurará uma tupla referente a uma linha da tabela t_porto_chamada, ulizando
+# o codigo de chamada correspondente a "cd_chamada"
 
 def find_one_by_codigo(chamada):
     try:
@@ -58,6 +60,8 @@ def find_one_by_codigo(chamada):
     except Exception as error:
         print("Ocorreu um erro ao consultar os livros")
         raise error
+#função que procurará uma tupla referente a uma linha da tabela t_porto_chamada, ulizando
+# o id de chamada correspondente a "id_chamada"
 
 def find_one_by_id(id):
     try:
@@ -76,24 +80,8 @@ def find_one_by_id(id):
         print("Ocorreu um erro ao consultar os livros")
         raise error
 
-
-def update(veiculo, placa):
-    try:
-        with oracledb.connect(user=user, password=password, dsn=dsn) as con:
-                                         
-            with con.cursor() as cur:
-                sql = """UPDATE t_porto_veiculo_cliente SET id_veiculo=:idveiculo, id_cliente=:id, nr_peso=:peso, nr_comprimento=:comprimento,
-                  nr_largura=:largura, nr_altura=:altura, nr_eixos=:eixos, ds_marca=:marca,dt_cadastro=:data WHERE cd_placa = :placa"""
-                cur.execute(sql, { **veiculo, 'placa': placa })
-            
-            con.commit()
-
-    except Exception as erro:
-        print("Ocorreu um erro ao atualizar seu veiculo.")
-        raise erro
-
-
-
+#função reponsalvel por deletar uma linha da tabela t_porto_chamada correspondente ao 
+# id de um veiculo id_veiculo
 def deletePorIdVeiculo(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -108,6 +96,8 @@ def deletePorIdVeiculo(id):
     except Exception as erro:
         print("Ocorreu um erro ao deletar o livro.")
         raise erro
+#função reponsalvel por deletar uma linha da tabela t_porto_chamada correspondente ao 
+# id de um cliente "id_cliente"
 
 def deletePorIdCliente(id):
     try:
@@ -123,5 +113,5 @@ def deletePorIdCliente(id):
     except Exception as erro:
         print("Ocorreu um erro ao deletar o livro.")
         raise erro
-#delete('456-fsdf')
+
 

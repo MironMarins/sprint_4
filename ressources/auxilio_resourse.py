@@ -4,6 +4,7 @@ user='rm551801'
 password='040591'
 dsn='oracle.fiap.com.br/orcl'
 
+#função que trará uma lista de tuplas referente a tabela t_porto_problema
 def find_all_problemas():
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -15,10 +16,8 @@ def find_all_problemas():
     except Exception as error:
         print("Ocorreu um erro")
         raise error
-#tuplaP = find_all_problemas()
-#for i in range(len(tuplaP)):
-    #print("["+str(tuplaP[i][0])+"] "+ str(tuplaP[i][1]))
 
+#função que procurará uma tupla referente a uma linha da tabela t_porto_problema
 def find_one_by_id_problema(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -36,6 +35,7 @@ def find_one_by_id_problema(id):
         print("Ocorreu um erro na consulta ao tipo de erro")
         raise error
 
+#função que trará uma lista de tuplas referente a tabela t_porto_especificacao
 
 def find_all_especificacao():
     try:
@@ -48,10 +48,8 @@ def find_all_especificacao():
     except Exception as error:
         print("Ocorreu um erro")
         raise error
-#tuplaE = find_all_especificacao()
-#for i in range(len(tuplaE)):
-    #print("["+str(tuplaE[i][0])+"] "+ str(tuplaE[i][1]))
 
+#função que procurará uma tupla referente a uma linha da tabela t_porto_especificacao
 def find_one_by_id_especificacao(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -70,7 +68,7 @@ def find_one_by_id_especificacao(id):
         raise error
 
 
-
+#função que trará uma lista de tuplas referente a tabela t_porto_especificacao
 def find_all_auxilio():
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -82,10 +80,8 @@ def find_all_auxilio():
     except Exception as error:
         print("Ocorreu um erro")
         raise error
-#tuplaE = find_all_especificacao()
-#for i in range(len(tuplaE)):
-    #print("["+str(tuplaE[i][0])+"] "+ str(tuplaE[i][1]))
 
+#função que procurará uma tupla referente a uma linha da tabela t_porto_especificacao
 def find_one_by_id_auxilio(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:

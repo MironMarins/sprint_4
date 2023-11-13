@@ -31,8 +31,8 @@ while escolha != 7 or opcao == "inicio":
         idcliente = cliente_resource.find_one_by_codigo(id=id)
         idcliente=idcliente[0]
         
-        veiculo = cadastra.cadastraV(id=idcliente,data=dataHora)
-        veiculo_resource.create(veiculo)
+        veiculo = cadastra.cadastraV(id=idcliente,data=dataHora) #mostrará as informações, sobre o veiculo, a serem cadastradas pelo cliente
+        veiculo_resource.create(veiculo) #usará as informações e as importará para nosso banco de dados
         print(cli)
         print("=-"*10)
         print("por favor anote o numero de seu  cadastro")
@@ -48,7 +48,8 @@ while escolha != 7 or opcao == "inicio":
         opcao = "checar"
         while opcao == "checar":
             listadados =cliente_resource.find_all()
-            print(listadados)
+            print(listadados) # mostrará um lista de tuplas correspondete a tabela t_porto_cliente, essa informação
+            #só tem a função de guiar a equipe de teste, ela será excluida na versão final
             id = input("seu codigo de cadastro: ")
                                             
             print("=-"*10)
@@ -69,7 +70,7 @@ while escolha != 7 or opcao == "inicio":
             else: 
                  idcliente=idcliente[0]
                  veiculo = cadastra.cadastraV(id=idcliente,data=dataHora) # cliente poderá colocar as informações do novo veiculo que quiser adicionar
-                 veiculo_resource.create(veiculo)
+                 veiculo_resource.create(veiculo)#adicionará as informações do novo veiculo no banco de dados
                  print("veiculo adicionado com sucesso!")
                  print(veiculo_resource.find_one_by_placa(veiculo['placa']))
                  print("=-"*10)
@@ -118,8 +119,8 @@ while escolha != 7 or opcao == "inicio":
                             
                        else:
                               
-                            menu.seuVeiculo(veiculo=veiculo)
-                            print(veiculo)   
+                            menu.seuVeiculo(veiculo=veiculo) 
+                               
                             print("=-"*10)
                             veiculo = veiculo_resource.find_one_by_placa(placa=placa)
                             idveiculo = veiculo[0]
@@ -133,7 +134,7 @@ while escolha != 7 or opcao == "inicio":
                             marca = veiculo[8]
                             data = veiculo[9]
 
-                            print(menu.seuVeiculo(veiculo))
+                            print(menu.seuVeiculo(veiculo)) #mostra o menu de informções para o cliente escolher qual deseja alterar
                             escolha = int(input("qual informação deseja alterar?"))
                             if escolha ==1:
                                     peso = float(input("qual o novo peso?"))
@@ -146,9 +147,10 @@ while escolha != 7 or opcao == "inicio":
                             elif escolha ==5:
                                     eixos = int(input("quantos eixos?"))
                             elif escolha ==6:
-                                    placa = str(input("qual a nova plana?"))
+                                    placa = str(input("qual a nova placa?"))
                             elif escolha ==7:
                                     marca = str(input("qual a nova marca?"))
+                            #montará um novo dicionario cujas informações iram popular a linha da tabela de nosso BD correspondente a placa do carro do cliente
                             vei = cadastra.seuVeiculo(idveiculo=idveiculo,id=id,peso=peso,comprimento=peso,largura=largura,altura=altura,eixos=eixos,placa=placa,marca=marca,data=data)
                             veiculo_resource.update(vei,placa)                                        
                             print(veiculo)
@@ -176,6 +178,7 @@ while escolha != 7 or opcao == "inicio":
                  elif opcao == 1:
                     opcao = "consulta"
               else:
+                   #colocará as informações a mostra do veiculo do cliente a mostra
                    print("suas informações de cadastro são:")
                    print('id:', tuplacliente[0])
                    print('nome:', tuplacliente[1])
@@ -204,7 +207,7 @@ while escolha != 7 or opcao == "inicio":
                     elif opcao ==1:
                        opcao = 'consultaVeiculo'
                 else:
-
+                    #colocará as informações referente uma chamada especifica
                     print("suas informções de cadastro são:")
                     print('id_veiculo:', veiculo_consulta[0])
                     print('id_cliente:', veiculo_consulta[1])

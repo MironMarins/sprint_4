@@ -8,7 +8,9 @@ dsn='oracle.fiap.com.br/orcl'
 hoje = dt.datetime.now()
 dataHora = hoje.strftime('%d/%m/%Y %H:%M')
 
-
+# função responçavel por receber um as informações de uma 
+# dicionario e usar essas informações para montar uma linha na tabela
+#  t_porto_cliente
 
 def create(cliente):
     try:
@@ -27,8 +29,7 @@ def create(cliente):
         print("Ocorreu um erro ao realizar seu cadastro.")
         raise error
 
-
-
+#função que trará uma lista de tuplas referente a tabela t_porto_cliente
 
 def find_all():
     try:
@@ -43,7 +44,9 @@ def find_all():
         raise error
 
 
-
+#função que trará uma tupla referente a uma linha da tabela t_porto_cliente, ulizando
+# o codigo de cliente providenciado por essa aplicação, que será correspondente 
+# a "cd_cliente"
 
 def find_one_by_codigo(id):
     try:
@@ -61,6 +64,8 @@ def find_one_by_codigo(id):
     except Exception as error:
         print("Ocorreu um erro na consulta ao seu cadastro")
         raise error
+#função que trará uma tupla referente a uma linha da tabela t_porto_cliente, ulizando
+# o id de cliente que será correspondente a "id_cliente"
 def find_one_by_id(id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -80,7 +85,9 @@ def find_one_by_id(id):
 
 print(find_one_by_id(4))
 
-
+#função responsavel por alterar informações na tabela t_porto_cliente
+#ela recebera o codigo correspondente a cd_cliente e um dicionario com novas informações 
+#que substituiram as informações correspondentes a mesma linha da informação cd_cliente
 def update(cliente, id):
     try:
         with oracledb.connect(user=user, password=password, dsn=dsn) as con:
@@ -95,7 +102,8 @@ def update(cliente, id):
         print("Ocorreu um erro ao atualizar seu cadastro.")
         raise erro
 
-
+#função reponsalvel por deletar uma linha da tabela t_porto_cliente correspondente ao 
+# codigo de um cliente "correspondente a "cd_cliente"
 
 def delete(codigo):
     try:
