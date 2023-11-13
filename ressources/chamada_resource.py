@@ -18,7 +18,7 @@ def create(chamada):
             with con.cursor() as cur:
                 sql = """
                 INSERT INTO t_porto_chamada (id_chamada, id_problema, id_cliente, id_auxilio, id_veiculo, id_especificacao, id_carga, dt_chamada, cd_chamada)
-                VALUES (seq_id2.nextval, :idProblema, :idCliente, :idAuxilio, :idVeiculo, :idEspecificacao, :idCarga, to_date(:dtChamada, 'DD/MM/YYYY HH24:MI'), :idCodigo) """
+                VALUES (seq_cham.nextval, :idProblema, :idCliente, :idAuxilio, :idVeiculo, :idEspecificacao, :idCarga, to_date(:dtChamada, 'DD/MM/YYYY HH24:MI'), :idCodigo) """
                 cur.execute(sql, chamada)
             
             con.commit()

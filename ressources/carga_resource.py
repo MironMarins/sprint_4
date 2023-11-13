@@ -18,7 +18,7 @@ def create(carga):
             with con.cursor() as cur:
                 sql = """
                 INSERT INTO t_porto_veiculo_carga (cd_placa, nr_peso, nr_comprimento, nr_altura, nr_largura, nr_eixos, ds_tipo, dt_cadastro, id_carga, cd_carga)
-                VALUES (:placa, :peso, :comprimento, :altura, :largura, :eixos, :CargaTipo, to_date(:data, 'DD/MM/YYYY HH24:MI'),seq_idcarga.nextval,:codigo) """
+                VALUES (:placa, :peso, :comprimento, :altura, :largura, :eixos, :CargaTipo, to_date(:data, 'DD/MM/YYYY HH24:MI'),seq_cargavei.nextval,:codigo) """
                 cur.execute(sql, carga)
             
             con.commit()

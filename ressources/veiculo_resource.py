@@ -16,7 +16,7 @@ def create(veiculo):
             with con.cursor() as cur:
                 sql = """
                 INSERT INTO t_porto_veiculo_cliente (id_veiculo, id_cliente, nr_peso, nr_comprimento, nr_largura, nr_altura, nr_eixos, cd_placa, ds_marca,dt_cadastro)
-                VALUES (seq_id.nextval, :CodigoCliente, :peso, :comprimento, :largura, :altura, :eixos, :placa, :marca, to_date(:data, 'DD/MM/YYYY HH24:MI')) """
+                VALUES (seq_veiculocli.nextval, :CodigoCliente, :peso, :comprimento, :largura, :altura, :eixos, :placa, :marca, to_date(:data, 'DD/MM/YYYY HH24:MI')) """
                 cur.execute(sql, veiculo)
             
             con.commit()

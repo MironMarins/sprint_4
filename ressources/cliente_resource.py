@@ -19,7 +19,7 @@ def create(cliente):
             with con.cursor() as cur:
                 sql = """
                 INSERT INTO t_porto_cliente (id_cliente, nm_cliente, nr_cpf, dt_cadastro, cd_cliente)
-                VALUES (seq_id.nextval, :nome, :cpf, to_date(:data, 'DD/MM/YYYY HH24:MI'), :id)
+                VALUES (seq_cliente.nextval, :nome, :cpf, to_date(:data, 'DD/MM/YYYY HH24:MI'), :id)
                 """
                 cur.execute(sql, cliente)
             
