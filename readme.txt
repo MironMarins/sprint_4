@@ -8,16 +8,18 @@ Nome: Paulo Henrique de Andrade Juniro RM: 99714
 
 Nome: Vinícius Pedro de Souza RM: 550907
 
-O programa funcionará foi feito para emular a funcionalidade do aplicativo Porto_SOS.
-para melhor observação e tratamento os elementos do CRUD foram divididos em diferentes programas 
-(cadastra.py, altera.py) que serão importados para o arquivo funcionar em total capacidade
-o programa tambem conta com os arquivos codigo.py e auxilio.py que funcionaram como classes semelhante 
-a um programa da linguagem Java e servirão para criar auxiliar na criação de objetos em main.py, há tambem o
-o arquivo menu que conta com uma função que guiará a interatividade do usurio pelas funcionalidades do programa.
+O programa foi feito para manipular(criar,atualizar,checar e eliminar dados) de nosso banco de dados.
+o program irá criar diverços dicionarios, cujas informações neles colocas serão importadas para suas 
+respectivas tabelas atraves das funções nos arquivos dentro da pasta ressources para nosso banco de dados.
+o programa tambem conta com os arquivo auxilio.py que contará com dicionarios contendo valores equivalentes aos valores 
+de tabelas em nosso banco de dados que foram feita para a manipulação do cliente, mas seus dados serviram
+para constriuir um "resumo de chamada" ao final de uma chamada realizada, o arquivo codigo gerará um codigo numerico de oito 
+digitos, o qual o cliente ultilizará para verificar ou manipular seus dados. main.py será o programa principal do cliente, será
+atrave´z dele que o cliente interatividade com o programa total.
 
 Programa "menu.py"
 
-Conta com uma função que criará o menu principal em main.py. A partir desse menu o usurio poderá decidir suas ações
+Conta com a função que criará o menu principal em main.py. A partir desse menu o usurio poderá decidir suas ações
 sendo elas: " 1 Criar cadastro", onde o usuarario deverá colocar suas informações e as informações de seu veiculo para serem
 quardadas no dicinario "cliente", que será quardado na lista "usuario". vale resaltar que o cliente tambem deverá colocar 
 as informações de seu veiculo logo em seguida. Os veiculos estarão em uma lista "veiculos" no artributo "veiculos" do dicionario
@@ -35,15 +37,14 @@ de chamada
 "6 - deletar impormações", onde o cliente deverá passar seu id para ou apagar sua conta completamente ou apenas apagar um 
 veiculo de sua conta
 "7 - sair", finaliza o programa
- 
+
+e a função seuVeiculo, que mostrará ao cliente atributos de veiculo correspondente aos dados de veiculos inseridos em nosso banco
+de dados
+
 Programa "codigo.py"
 
-Conta apenas com uma função que criará um codigo UNICO de 8 digitos que servirá como id do cliente e id de chamada de modal
-
-Programa "altera.py"
-
-Conta conta apenas com uma função que recebe dois valores, um atributo e um valor, o valor que for colocado substituir o valor 
-anterior no atributo colocado, essa função é usada apenas na opção de alteração do menu principal
+Conta apenas com uma função que criará um codigo de 8 digitos que servirá como codigo do cliente, codigo de chamada de modal e codigo de
+carga de veiculo
 
 Programa "auxilio.py"
 
