@@ -113,10 +113,11 @@ função "delete": irá receber um codigo existente em nossa tabela, e irá dele
 encontra 
 
 programa "veiculo_resource.py"
+
 O programa conta os recurssos que permitiram a manipulação dos dados da tabela "t_porto_cliente_veiculo".
 função "create": recebera um dicionario, e importará suas informações para a tabela "t_porto_cliente_veiculo".
 função "find_all": ira gerar uma lista de tupla que conterá todas as informações da tabela "t_porto_cliente_veiculo"
-função "find_one_by_placa": o codigo da placa do carro cadastrada pelo cliente e se ela estiver em nosso
+função "find_one_by_placa": irá receber o codigo da placa do carro cadastrada pelo cliente e se ela estiver em nosso
 banco de dados, a função ira retornar um tupla correspondente a linha do BD em em que a placa
 função "find_one_by_idVeiculo": o id correspondente ao numero da colona "id_cliente_veiculo" do BD e retornar um tupla 
 correspondente a linha da tabela em esse id faz parte
@@ -124,6 +125,58 @@ função "update": deve rebeber o codigo da placa de carro que deve pertencer ao
 informações que substituiram as anteriores da linha correspondente a linha em que o codigo se encontra.
 função "delete": irá receber o codigo de placa de carro existente em nossa tabela, e irá deletar as informações da 
 linha em que essa placa se encontra.
+
+programa "carga_resource.py"
+
+O programa conta os recurssos que permitiram a manipulação dos dados da tabela "t_porto_veiculo_carga".
+função "create": recebera um dicionario, e importará suas informações para a tabela "t_porto_veiculo_carga".
+função "find_all": ira gerar uma lista de tupla que conterá todas as informações da tabela "t_porto_veiculo_carga"
+função "find_one_by_placa": o codigo da placa do carro cadastrada pelo cliente, que corresponde a carga cadastrada 
+e se ela estiver em nosso banco de dados, a função ira retornar um tupla correspondente a linha do BD em em que a placa
+função "find_one_by_id": irá receber o id correspondente ao numero da colona "t_porto_veiculo_carga" do BD e retornar um tupla 
+correspondente a linha da tabela em esse id faz parte
+função find_one_by_codigo: irá receber um codigo numerico providenciado pelo nosso programa e se ele estiver em nosso
+banco de dados, a função ira retornar um tupla correspondente a linha do BD em o codigo faz parte
+
+OBS:como colocamos sequences em nosso banco de dados e o mesmo carros pode usar cargas diferentes, precisamos de uma maneira
+imediata para chamar as impormações de um carga especifica, por isso nosso programa ira atribuir um codigo para cada 
+carga cadastrada
+ 
+função "update": deve rebeber o codigo da placa de carro correspondente a carga cadastrada e que deve pertencer 
+ao nosso BD e um dicionario com novas informações que substituiram as anteriores da linha correspondente a 
+linha em que o codigo se encontra.
+função "delete": irá receber o codigo de placa de carro correspondente a carga cadastrada em nossa tabela,
+e irá deletar as informações da linha em que essa placa se encontra.
+
+programa "auxilio_resourse.py"
+
+O programa conta os recurssos que permitiram a consulta das informações contidas nas tabelas "t_porto_problema", 
+"t_porto_especificacao" e "t_porto_auxilio.
+função "find_all_problemas": ira gerar uma lista de tupla que conterá todas as informações da tabela "t_porto_veiculo_carga"
+função "find_one_by_id_problema": ira rebecer o id de uma linha na tabela "t_porto_veiculo_carga" e devolver uma tupla correspondente
+a essa linha
+função "find_all_especificacao": ira gerar uma lista de tupla que conterá todas as informações da tabela "t_porto_especificacao"
+função "find_one_by_id_especificacao": ira rebecer o id de uma linha na tabela "t_porto_especificacao" e devolver uma tupla correspondente
+a essa linha
+função "find_all_auxilio": ira gerar uma lista de tupla que conterá todas as informações da tabela "t_porto_auxilio"
+função "find_one_by_id_auxilio": ira rebecer o id de uma linha na tabela "t_porto_auxilio" e devolver uma tupla correspondente
+a essa linha
+
+programa "chamada_ressource.py"
+
+O programa conta os recurssos que permitiram a criação, consulta e deleção de dados da tabela "t_porto_chamada".
+função "create": recebera um dicionario, e importará suas informações para a tabela "t_porto_chamada".
+função "find_all": ira gerar uma lista de tupla que conterá todas as informações da tabela "t_porto_cliente_veiculo"
+função "find_one_by_codigo": irá receber um codigo numerico providenciado pelo nosso programa e se ele estiver em nosso
+banco de dados, a função ira retornar um tupla correspondente a linha do BD em o codigo faz parte
+função "find_one_by_id": irá receber o id correspondente ao numero da coluna "id_chamada" do BD e retornar uma tupla 
+correspondente a linha da tabela em esse id faz parte
+função "deletePorIdVeiculo": irá receber id correspondente a coluna id_veiculo e irá deletar as informações da linha
+correspondente a esse id.
+função "deletePorIdCliente": irá receber id correspondente a coluna id_cliente e irá deletar as informações da linha
+correspondente a esse id.
+
+
 
  
 
